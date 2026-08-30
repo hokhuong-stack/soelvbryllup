@@ -16,6 +16,8 @@
         --silver-mid: #b8b8b8;
         --glass-bg: rgba(15, 15, 20, 0.45);
         --glass-border: rgba(255, 255, 255, 0.2);
+        --gold: #d4a574;
+        --gold-light: #e8c9a0;
         /* Mobile-first spacing */
         --padding-xs: 12px;
         --padding-sm: 16px;
@@ -32,7 +34,7 @@
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        background: #050505;
+        background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
         color: var(--silver-light);
         font-family: 'Montserrat', sans-serif;
         overflow-x: hidden;
@@ -95,17 +97,22 @@
         aspect-ratio: 1;
     }
 
-    /* Envelope Back */
+    /* ===== WHITE ENVELOPE STYLING ===== */
+    
+    /* Envelope Back - White with gold trim */
     .envelope-back {
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
         height: 80%;
-        background: rgba(10, 10, 15, 0.9);
-        border: 1px solid var(--glass-border);
+        background: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 50%, #f0f0f0 100%);
+        border: 2px solid var(--gold);
         border-radius: 0 0 28px 28px;
-        box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        box-shadow: 
+            0 20px 60px rgba(0,0,0,0.15),
+            inset 0 1px 0 rgba(255,255,255,0.8),
+            0 0 30px rgba(212, 165, 116, 0.2);
         z-index: 3;
         transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
         display: flex;
@@ -114,10 +121,22 @@
         padding-bottom: var(--padding-sm);
     }
 
+    /* Decorative bottom line on envelope */
+    .envelope-back::before {
+        content: '';
+        position: absolute;
+        bottom: 15%;
+        left: 5%;
+        right: 5%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+        opacity: 0.6;
+    }
+
     .envelope-back p {
         font-family: 'Playfair Display', serif;
         font-style: italic;
-        color: var(--silver-mid);
+        color: var(--gold);
         letter-spacing: 2px;
         animation: pulseText 2s infinite;
         cursor: pointer;
@@ -125,17 +144,18 @@
         margin: 0;
         padding: 0 var(--padding-sm);
         text-align: center;
+        font-weight: 500;
     }
 
-    /* Envelope Flap - 3D Opening */
+    /* Envelope Flap - White triangular flap with gold edge */
     .envelope-flap {
         position: absolute;
         top: 20%;
         left: 0;
         width: 100%;
         height: 50%;
-        background: linear-gradient(135deg, rgba(25, 25, 30, 0.95), rgba(15, 15, 20, 0.95));
-        border: 1px solid var(--glass-border);
+        background: linear-gradient(135deg, #ffffff 0%, #fafafa 50%, #f5f5f5 100%);
+        border: 2px solid var(--gold);
         border-bottom: none;
         border-radius: 28px 28px 0 0;
         clip-path: polygon(0 0, 100% 0, 50% 100%);
@@ -144,9 +164,23 @@
         transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
         touch-action: manipulation;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 5px 15px rgba(0,0,0,0.1);
     }
 
-    /* Silver Seal */
+    /* Decorative elements on flap */
+    .envelope-flap::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+        opacity: 0.5;
+    }
+
+    /* Gold Seal - Enhanced luxury appearance */
     .seal {
         position: absolute;
         bottom: -25px;
@@ -154,7 +188,8 @@
         transform: translateX(-50%);
         width: clamp(50px, 12vw, 70px);
         height: clamp(50px, 12vw, 70px);
-        background: radial-gradient(circle at 30% 30%, #ffffff, #a8a8a8, #555);
+        background: radial-gradient(circle at 30% 30%, #ffd700, var(--gold), #b8860b);
+        border: 3px solid var(--gold-light);
         border-radius: 50%;
         z-index: 6;
         display: flex;
@@ -163,11 +198,25 @@
         font-family: 'Playfair Display', serif;
         font-weight: 700;
         font-size: clamp(1rem, 2.5vw, 1.4rem);
-        color: #111;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 -2px 5px rgba(0,0,0,0.3);
+        color: #fff;
+        box-shadow: 
+            0 8px 20px rgba(212, 165, 116, 0.4),
+            inset 0 -2px 5px rgba(0,0,0,0.3),
+            inset 0 2px 5px rgba(255,255,255,0.3);
         transition: all 0.5s ease;
         cursor: pointer;
         touch-action: manipulation;
+    }
+
+    /* Sparkle effect on seal */
+    .seal::before {
+        content: '✦';
+        position: absolute;
+        top: -15px;
+        animation: sparkle 2s infinite;
+        color: var(--gold-light);
+        opacity: 0;
+        font-size: 1.2rem;
     }
 
     /* Glass Card - Invitation */
@@ -202,8 +251,12 @@
     }
 
     .envelope-wrapper.is-open .seal {
-        transform: translateX(-50%) scale(1.5);
+        transform: translateX(-50%) scale(1.5) rotateZ(360deg);
         opacity: 0;
+    }
+
+    .envelope-wrapper.is-open .seal::before {
+        animation: sparkleOpen 0.8s ease-out forwards;
     }
 
     .envelope-wrapper.is-open .envelope-back {
@@ -217,6 +270,26 @@
         transform: translateY(0) scale(1);
         pointer-events: auto;
         transition-delay: 0.3s;
+    }
+
+    /* Particle effects on open */
+    .particles {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 7;
+    }
+
+    .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: var(--gold-light);
+        border-radius: 50%;
+        pointer-events: none;
     }
 
     /* Typography - Mobile Optimized */
@@ -389,6 +462,27 @@
         100% { opacity: 0.5; }
     }
 
+    @keyframes sparkle {
+        0%, 100% { opacity: 0; transform: translate(0, 0) scale(1); }
+        50% { opacity: 1; transform: translate(5px, -5px) scale(1.2); }
+    }
+
+    @keyframes sparkleOpen {
+        0% { opacity: 1; transform: translate(0, 0) scale(1); }
+        100% { opacity: 0; transform: translate(10px, -20px) scale(0.5); }
+    }
+
+    @keyframes floatUp {
+        from {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-100px) translateX(var(--tx));
+        }
+    }
+
     /* Tablet Optimization (768px+) */
     @media (min-width: 768px) {
         :root {
@@ -456,7 +550,7 @@
     /* Dark mode - ensure visibility in light mode */
     @media (prefers-color-scheme: light) {
         body {
-            background: #f0f0f0;
+            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
         }
         .glass-card {
             background: rgba(245, 245, 245, 0.9);
@@ -485,6 +579,8 @@
             <div class="envelope-back">
                 <p>Tryk for at åbne</p>
             </div>
+
+            <div class="particles" id="particles"></div>
 
             <div class="glass-card" role="region" aria-label="Indbydelse til 25 års sølvbryllup">
                 <h1>Sølvbryllup</h1>
@@ -523,10 +619,33 @@
     </div>
 
     <script>
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            particlesContainer.innerHTML = '';
+            
+            const particleCount = 15;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const startX = Math.random() * 100;
+                const duration = 0.8 + Math.random() * 0.4;
+                const tx = (Math.random() - 0.5) * 200;
+                
+                particle.style.left = startX + '%';
+                particle.style.top = '50%';
+                particle.style.setProperty('--tx', tx + 'px');
+                particle.style.animation = `floatUp ${duration}s ease-out forwards`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
         function openEnvelope() {
             const envelope = document.getElementById('invitationEnvelope');
             if (!envelope.classList.contains('is-open')) {
                 envelope.classList.add('is-open');
+                createParticles();
             }
         }
 
