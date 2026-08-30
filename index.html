@@ -183,7 +183,7 @@
         padding: 28px 22px;
         box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05);
         text-align: center;
-        z-index: 4;
+        z-index: 2; /* below envelope-back while tucked */
         opacity: 0;
         pointer-events: none;
         transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.6s ease;
@@ -274,40 +274,40 @@
             <div class="envelope-body">
                 <div class="envelope-back">
                     <p>Tryk for at åbne</p>
-
-                    <!-- Move the invitation inside the pocket so it can "emerge" -->
-                    <div class="glass-card">
-                        <h1>Sølvbryllup</h1>
-                        <h2>Anh & Khuong inviterer til fejring af 25 års ægteskab</h2>
-                        <p><strong>Kære familie og venner.</strong><br><br>
-                        Vi glæder os meget til at se jer. Uanset om I er med os fysisk eller følger med hjemmefra, betyder det alt for os, at I er der på dagen.</p>
-
-                        <div class="section-title">Tid & Sted</div>
-                        <div class="info-box">
-                            <strong>Dato og Tid</strong>
-                            <span>Offentliggøres senere<br>(Uge 29) • Kl. --:--</span>
-                        </div>
-                        <div class="info-box">
-                            <strong>Fysisk Lokation</strong>
-                            <span>Can Tho<br>Vietnam</span>
-                        </div>
-
-                        <div class="section-title">Deltagelse (RSVP)</div>
-                        <p style="font-size: 0.85rem; margin-bottom: 5px; color: var(--silver-mid);">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
-                        <p style="font-size: 0.85rem; margin-bottom: 0; color: var(--silver-mid);">Giv os besked om I deltager fysisk eller online.</p>
-
-                        <div class="action-buttons">
-                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" class="btn btn-primary">Udfyld Tilmelding</a>
-                            <a href="https://photos.app.goo.gl/WTLYUEcQoZqZJGWF6" target="_blank" class="btn btn-secondary">Del / Se Billeder Her</a>
-                        </div>
-
-                        <div class="footer">Vi glæder os meget til at se jer!<br><strong>Anh & Khuong</strong></div>
-                    </div>
                 </div>
 
                 <div class="envelope-flap">
                     <div class="seal">A&K</div>
                 </div>
+            </div>
+
+            <!-- Move the invitation outside the back so it won't be hidden when envelope-back fades -->
+            <div class="glass-card">
+                <h1>Sølvbryllup</h1>
+                <h2>Anh & Khuong inviterer til fejring af 25 års ægteskab</h2>
+                <p><strong>Kære familie og venner.</strong><br><br>
+                Vi glæder os meget til at se jer. Uanset om I er med os fysisk eller følger med hjemmefra, betyder det alt for os, at I er der på dagen.</p>
+
+                <div class="section-title">Tid & Sted</div>
+                <div class="info-box">
+                    <strong>Dato og Tid</strong>
+                    <span>Offentliggøres senere<br>(Uge 29) • Kl. --:--</span>
+                </div>
+                <div class="info-box">
+                    <strong>Fysisk Lokation</strong>
+                    <span>Can Tho<br>Vietnam</span>
+                </div>
+
+                <div class="section-title">Deltagelse (RSVP)</div>
+                <p style="font-size: 0.85rem; margin-bottom: 5px; color: var(--silver-mid);">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 0; color: var(--silver-mid);">Giv os besked om I deltager fysisk eller online.</p>
+
+                <div class="action-buttons">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" class="btn btn-primary">Udfyld Tilmelding</a>
+                    <a href="https://photos.app.goo.gl/WTLYUEcQoZqZJGWF6" target="_blank" class="btn btn-secondary">Del / Se Billeder Her</a>
+                </div>
+
+                <div class="footer">Vi glæder os meget til at se jer!<br><strong>Anh & Khuong</strong></div>
             </div>
         </div>
     </div>
