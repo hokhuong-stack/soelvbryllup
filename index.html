@@ -79,6 +79,7 @@
         transform-style: preserve-3d;
         cursor: pointer;
         margin: 0 auto;
+        overflow: visible; /* allow card to move outside without being clipped */
     }
 
     /* Envelope body container - holds flap and back together */
@@ -210,13 +211,20 @@
         z-index: 1; /* ensure back is behind the card while open */
     }
 
-    /* card appears immediately (no delay) and is placed above flap/back */
+    /* card appears immediately (reduced upward move so it doesn't go off-screen) */
     .envelope-wrapper.is-open .glass-card {
-        transform: translateX(-50%) translateY(-115%) scale(1.02);
+        transform: translateX(-50%) translateY(-60%) scale(1.02);
         opacity: 1;
         pointer-events: auto;
-        z-index: 9; /* ensure it's on top of the flap & back */
+        z-index: 99; /* ensure it's on top of the flap & back */
         transition-delay: 0s; /* show immediately */
+    }
+
+    /* smaller translation on narrow screens */
+    @media (max-width: 600px) {
+        .envelope-wrapper.is-open .glass-card {
+            transform: translateX(-50%) translateY(-40%) scale(1.02);
+        }
     }
 
     /* Text + buttons (keep styles similar) */
