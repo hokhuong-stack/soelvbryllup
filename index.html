@@ -12,10 +12,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
     :root {
-        --silver-light: #f5f5f5;
-        --silver-mid: #b8b8b8;
-        --glass-bg: rgba(15, 15, 20, 0.45);
-        --glass-border: rgba(255, 255, 255, 0.2);
+        --blue-dark: #1e3a5f;
+        --blue-main: #2c5aa0;
+        --blue-light: #4a90e2;
+        --blue-accent: #1a2a4f;
+        --blue-text: #0f1f3f;
+        --text-light: #f8fafc;
+        --text-secondary: #64748b;
         --gold: #d4a574;
         --gold-light: #e8c9a0;
         /* Mobile-first spacing */
@@ -34,8 +37,8 @@
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-        color: var(--silver-light);
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        color: var(--text-light);
         font-family: 'Montserrat', sans-serif;
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
@@ -69,7 +72,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.25) 100%);
+        background: linear-gradient(to bottom, rgba(30,58,95,0.1) 0%, rgba(30,58,95,0.2) 100%);
         z-index: 1;
     }
 
@@ -219,20 +222,23 @@
         font-size: 1.2rem;
     }
 
-    /* Glass Card - Invitation */
+    /* Glass Card - Invitation with blue theme */
     .glass-card {
         position: relative;
-        background: var(--glass-bg);
+        background: linear-gradient(135deg, rgba(44, 90, 160, 0.95) 0%, rgba(30, 58, 95, 0.95) 100%);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        border: 1px solid var(--glass-border);
+        border: 2px solid rgba(74, 144, 226, 0.3);
         border-radius: 28px;
         padding: clamp(var(--padding-md), 5vw, var(--padding-lg));
         width: 100%;
         max-height: 85vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05);
+        box-shadow: 
+            0 20px 60px rgba(30, 58, 95, 0.3),
+            inset 0 0 0 1px rgba(255,255,255,0.1),
+            0 0 40px rgba(74, 144, 226, 0.2);
         text-align: center;
         z-index: 4;
         
@@ -297,13 +303,11 @@
         font-family: 'Playfair Display', serif;
         font-size: clamp(1.8rem, 6vw, 2.8rem);
         margin: 0 0 var(--padding-xs) 0;
-        background: linear-gradient(to right, #e0e0e0, #ffffff, #a8a8a8, #e0e0e0);
-        background-size: 200% auto;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: shine 5s linear infinite;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         line-height: 1.1;
         word-break: break-word;
+        font-weight: 700;
     }
 
     h2 {
@@ -311,7 +315,7 @@
         font-size: clamp(0.9rem, 3.5vw, 1.1rem);
         font-weight: 400;
         font-style: italic;
-        color: var(--silver-mid);
+        color: var(--blue-light);
         margin: 0 0 var(--padding-md) 0;
         line-height: 1.4;
     }
@@ -321,8 +325,13 @@
         line-height: 1.7;
         margin: 0 0 var(--padding-md) 0;
         font-weight: 300;
-        color: #eaeaea;
+        color: #e8f0f9;
         word-break: break-word;
+    }
+
+    p strong {
+        color: #fff;
+        font-weight: 600;
     }
 
     .section-title {
@@ -341,15 +350,15 @@
         content: '';
         position: absolute;
         width: 60%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.8), transparent);
         bottom: -12px;
         left: 20%;
     }
 
     .info-box {
-        background: rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(74, 144, 226, 0.3);
         border-radius: 16px;
         padding: clamp(var(--padding-sm), 3vw, var(--padding-md));
         margin-bottom: var(--padding-sm);
@@ -357,8 +366,8 @@
     }
 
     .info-box strong {
-        font-weight: 500;
-        color: var(--silver-mid);
+        font-weight: 600;
+        color: var(--blue-light);
         display: block;
         margin-bottom: var(--padding-xs);
         letter-spacing: 1.5px;
@@ -408,25 +417,26 @@
     }
 
     .btn-primary {
-        background: linear-gradient(135deg, #ffffff, #b0b0b0);
-        color: #111;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        background: linear-gradient(135deg, #4a90e2, #2c5aa0);
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(44, 90, 160, 0.4);
+        border: 1px solid rgba(74, 144, 226, 0.5);
     }
 
     .btn-primary:active {
         transform: scale(0.95);
-        box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+        box-shadow: 0 5px 10px rgba(44, 90, 160, 0.4);
     }
 
     .btn-secondary {
-        background: rgba(0, 0, 0, 0.4);
-        border: 2px solid rgba(255,255,255,0.3);
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(74, 144, 226, 0.5);
         color: #fff;
     }
 
     .btn-secondary:active {
         transform: scale(0.95);
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(74, 144, 226, 0.2);
     }
 
     /* Footer */
@@ -435,7 +445,7 @@
         margin-bottom: var(--padding-sm);
         font-family: 'Playfair Display', serif;
         font-size: clamp(0.95rem, 3vw, 1.1rem);
-        color: #ccc;
+        color: #cbd5e1;
         font-style: italic;
         line-height: 1.6;
     }
@@ -446,16 +456,10 @@
         font-size: clamp(1.2rem, 4vw, 1.5rem);
         color: #fff;
         font-style: normal;
-        background: linear-gradient(to right, #fff, #a8a8a8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        font-weight: 700;
     }
 
     /* Animations */
-    @keyframes shine {
-        to { background-position: 200% center; }
-    }
-
     @keyframes pulseText {
         0% { opacity: 0.5; }
         50% { opacity: 1; }
@@ -519,7 +523,7 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 30px rgba(44, 90, 160, 0.5);
         }
     }
 
@@ -550,11 +554,7 @@
     /* Dark mode - ensure visibility in light mode */
     @media (prefers-color-scheme: light) {
         body {
-            background: linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%);
-        }
-        .glass-card {
-            background: rgba(245, 245, 245, 0.9);
-            color: #111;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
         }
     }
 
@@ -602,8 +602,8 @@
                 </div>
                 
                 <div class="section-title">Deltagelse (RSVP)</div>
-                <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 8px; color: var(--silver-mid);">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
-                <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 0; color: var(--silver-mid);">Giv os besked om I deltager fysisk eller online.</p>
+                <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 8px; color: #e8f0f9;">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
+                <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 0; color: #e8f0f9;">Giv os besked om I deltager fysisk eller online.</p>
                 
                 <div class="action-buttons">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" rel="noopener" class="btn btn-primary">Udfyld Tilmelding</a>
