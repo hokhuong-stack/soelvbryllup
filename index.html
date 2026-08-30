@@ -182,26 +182,25 @@
         cursor: pointer;
         touch-action: manipulation;
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 20px rgba(0,0,0,0.4);
-        overflow: visible; /* Sikrer at forseglingen på spidsen kan ses tydeligt */
     }
 
-    /* --- RØD VOKSFORSEGLING PLACERET PÅ SPIDSEN AF FLAPPEN --- */
+    /* --- RØD VOKSFORSEGLING PLACERET FOREST PÅ SPIDSEN (Z-INDEX 7) --- */
     .wax-seal {
         position: absolute;
-        bottom: -22px; /* Placeret præcist på spidsen af trekantsflappen */
+        top: calc(20% + 50% - 32px); /* Placeret nøjagtigt der hvor flappen slutter i bunden */
         left: 50%;
         transform: translateX(-50%);
-        width: 62px;
-        height: 62px;
+        width: 64px;
+        height: 64px;
         background: radial-gradient(circle at 35% 30%, var(--wax-red-light) 0%, var(--wax-red) 55%, var(--wax-red-dark) 100%);
-        border: 2px solid rgba(255, 255, 255, 0.4);
+        border: 2px solid rgba(255, 255, 255, 0.6);
         border-radius: 50%;
-        z-index: 6;
+        z-index: 7; /* Sørger for at den ligger fuldstændig forest i kuvert-laget */
         display: flex;
         align-items: center;
         justify-content: center;
         box-shadow: 
-            0 8px 20px rgba(0, 0, 0, 0.5),
+            0 10px 25px rgba(0, 0, 0, 0.6),
             inset 0 -3px 6px rgba(0, 0, 0, 0.4),
             inset 0 3px 6px rgba(255, 255, 255, 0.5);
         pointer-events: none;
@@ -551,7 +550,7 @@
     <div class="perspective-container">
         <div class="envelope-wrapper" id="invitationEnvelope" role="button" tabindex="0" onclick="openEnvelope()" onkeypress="handleKeyPress(event)">
             
-            <!-- Kuvertens flap med sølvbryllupseffekter og rød voksforsegling på spidsen -->
+            <!-- Kuvertens flap med sølvbryllupseffekter -->
             <div class="envelope-flap" aria-label="Tryk for at åbne kuvert">
                 <div class="wedding-sparkles">
                     <span class="sparkle-icon">✦</span>
@@ -559,11 +558,11 @@
                     <span class="sparkle-icon">✦</span>
                     <span class="sparkle-icon">✦</span>
                 </div>
-                
-                <!-- Rød voksforsegling placeret på spidsen af flappen -->
-                <div class="wax-seal">
-                    <span class="wax-seal-text">A&amp;K</span>
-                </div>
+            </div>
+
+            <!-- Rød voksforsegling placeret helt forest på spidsen, så den holder kuverten lukket -->
+            <div class="wax-seal">
+                <span class="wax-seal-text">A&amp;K</span>
             </div>
             
             <div class="envelope-back">
