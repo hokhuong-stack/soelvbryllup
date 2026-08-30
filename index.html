@@ -20,15 +20,14 @@
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        background: transparent;
+        background: #050505;
         color: var(--silver-light);
         font-family: 'Montserrat', sans-serif;
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
-        position: relative;
     }
 
-    /* Baggrundsbillede aktiveret og tilpasset */
+    /* Baggrund og overlay (beholdt fra dit udgangspunkt) */
     .bg-image {
         position: fixed;
         top: 0;
@@ -42,30 +41,108 @@
         z-index: 0;
     }
 
-    /* Overlay gjort lidt mere transparent, så det flotte kort træder frem */
     .overlay {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.7) 100%);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.25) 100%);
         z-index: 1;
     }
 
-    .content-wrapper {
+    /* --- NYT: 3D Kuvert Opsætning --- */
+    .perspective-container {
         position: relative;
         z-index: 2;
+        perspective: 1200px; /* Skaber 3D-dybden */
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         min-height: 100vh;
         padding: 40px 20px;
         box-sizing: border-box;
     }
 
+    .envelope-wrapper {
+        position: relative;
+        width: 100%;
+        max-width: 400px;
+        transform-style: preserve-3d;
+    }
+
+    /* Selve Kuverten */
+    .envelope-back {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 80%;
+        background: rgba(10, 10, 15, 0.9);
+        border: 1px solid var(--glass-border);
+        border-radius: 0 0 28px 28px;
+        box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        z-index: 3;
+        transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 30px;
+    }
+
+    .envelope-back p {
+        font-family: 'Playfair Display', serif;
+        font-style: italic;
+        color: var(--silver-mid);
+        letter-spacing: 2px;
+        animation: pulseText 2s infinite;
+        cursor: pointer;
+    }
+
+    /* Flappen der åbner i 3D */
+    .envelope-flap {
+        position: absolute;
+        top: 20%;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: linear-gradient(135deg, rgba(25, 25, 30, 0.95), rgba(15, 15, 20, 0.95));
+        border: 1px solid var(--glass-border);
+        border-bottom: none;
+        border-radius: 28px 28px 0 0;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        transform-origin: top center;
+        z-index: 5;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+    }
+
+    /* Sølvseglet */
+    .seal {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 60px;
+        background: radial-gradient(circle at 30% 30%, #ffffff, #a8a8a8, #555);
+        border-radius: 50%;
+        z-index: 6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: #111;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 -2px 5px rgba(0,0,0,0.3);
+        transition: all 0.5s ease;
+        cursor: pointer;
+    }
+
+    /* Selve indbydelsen (Din oprindelige glass-card) */
     .glass-card {
+        position: relative;
         background: var(--glass-bg);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
@@ -73,12 +150,43 @@
         border-radius: 28px;
         padding: 45px 30px;
         width: 100%;
-        max-width: 400px;
         box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05);
         text-align: center;
-        animation: fadeUp 1s ease-out;
+        z-index: 4;
+        
+        /* Start-tilstand: Skjult nede i kuverten */
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none; /* Forhindrer klik før den er åbnet */
     }
 
+    /* --- ANIMATIONEN NÅR DEN ÅBNES --- */
+    .envelope-wrapper.is-open .envelope-flap {
+        transform: rotateX(180deg);
+        opacity: 0;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.4s;
+    }
+
+    .envelope-wrapper.is-open .seal {
+        transform: translateX(-50%) scale(1.5);
+        opacity: 0;
+    }
+
+    .envelope-wrapper.is-open .envelope-back {
+        opacity: 0;
+        transform: translateY(50px);
+        pointer-events: none;
+    }
+
+    .envelope-wrapper.is-open .glass-card {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto; /* Tillader nu klik på knapper */
+        transition-delay: 0.3s; /* Venter på at flappen er åbnet */
+    }
+
+    /* Eksisterende styling til tekst og knapper fra dit udgangspunkt */
     h1 {
         font-family: 'Playfair Display', serif;
         font-size: 2.8rem;
@@ -101,14 +209,8 @@
         line-height: 1.4;
     }
 
-    p {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        margin: 0 0 25px 0;
-        font-weight: 300;
-        color: #eaeaea;
-    }
-
+    p { font-size: 0.95rem; line-height: 1.7; margin: 0 0 25px 0; font-weight: 300; color: #eaeaea; }
+    
     .section-title {
         font-family: 'Playfair Display', serif;
         font-size: 1.2rem;
@@ -136,152 +238,88 @@
         border-radius: 20px;
         padding: 20px;
         margin-bottom: 15px;
-        transition: transform 0.3s ease;
     }
 
-    .info-box:active {
-        transform: scale(0.98);
-    }
+    .info-box strong { font-weight: 500; color: var(--silver-mid); display: block; margin-bottom: 8px; letter-spacing: 1.5px; font-size: 0.75rem; text-transform: uppercase; }
+    .info-box span { font-size: 1.1rem; font-family: 'Playfair Display', serif; color: #fff; display: block; line-height: 1.4; }
 
-    .info-box strong {
-        font-weight: 500;
-        color: var(--silver-mid);
-        display: block;
-        margin-bottom: 8px;
-        letter-spacing: 1.5px;
-        font-size: 0.75rem;
-        text-transform: uppercase;
-    }
-
-    .info-box span {
-        font-size: 1.1rem;
-        font-family: 'Playfair Display', serif;
-        color: #fff;
-        display: block;
-        line-height: 1.4;
-    }
-
-    .action-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        margin-top: 35px;
-    }
+    .action-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 35px; }
 
     .btn {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding: 18px 20px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 500;
-        font-size: 0.85rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        box-sizing: border-box;
-        transition: all 0.3s ease;
-        -webkit-tap-highlight-color: transparent;
+        display: inline-flex; justify-content: center; align-items: center; width: 100%; padding: 18px 20px;
+        border-radius: 30px; text-decoration: none; font-weight: 500; font-size: 0.85rem; letter-spacing: 2px;
+        text-transform: uppercase; box-sizing: border-box; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent;
     }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #ffffff, #b0b0b0);
-        color: #111;
-        border: none;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-    }
-
-    .btn-primary:active {
-        transform: translateY(2px);
-        box-shadow: 0 5px 10px rgba(0,0,0,0.4);
-    }
-
-    .btn-secondary {
-        background: rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(255,255,255,0.3);
-        color: #fff;
-    }
-
-    .btn-secondary:active {
-        background: rgba(255, 255, 255, 0.1);
-    }
+    .btn-primary { background: linear-gradient(135deg, #ffffff, #b0b0b0); color: #111; border: none; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+    .btn-secondary { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.3); color: #fff; }
     
-    .footer {
-        margin-top: 50px;
-        font-family: 'Playfair Display', serif;
-        font-size: 1.1rem;
-        color: #ccc;
-        font-style: italic;
-    }
-    
-    .footer strong {
-        display: block;
-        margin-top: 10px;
-        font-size: 1.5rem;
-        color: #fff;
-        font-style: normal;
-        background: linear-gradient(to right, #fff, #a8a8a8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
+    .footer { margin-top: 50px; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #ccc; font-style: italic; }
+    .footer strong { display: block; margin-top: 10px; font-size: 1.5rem; color: #fff; font-style: normal; background: linear-gradient(to right, #fff, #a8a8a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-    /* Animations */
-    @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes shine {
-        to { background-position: 200% center; }
-    }
-
-    /* Small screen adjustments */
-    @media (max-height: 700px) {
-        .content-wrapper { padding: 20px; }
-        .glass-card { padding: 30px 20px; }
-        h1 { font-size: 2.4rem; }
-    }
+    @keyframes shine { to { background-position: 200% center; } }
+    @keyframes pulseText { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
 </style>
 </head>
 <body>
     <div class="bg-image"></div>
     <div class="overlay"></div>
     
-    <div class="content-wrapper">
-        <div class="glass-card">
-            <h1>Sølvbryllup</h1>
-            <h2>Anh & Khuong inviterer til fejring af 25 års ægteskab</h2>
+    <div class="perspective-container">
+        <!-- Wrapperen der styrer åbningen -->
+        <div class="envelope-wrapper" id="invitationEnvelope" onclick="openEnvelope()">
             
-            <p><strong>Kære familie og venner.</strong><br><br>
-            Vi glæder os meget til at se jer. Uanset om I er med os fysisk eller følger med hjemmefra, betyder det alt for os, at I er der på dagen.</p>
-            
-            <div class="section-title">Tid & Sted</div>
-            
-            <div class="info-box">
-                <strong>Dato og Tid</strong>
-                <span>Offentliggøres senere<br>(Uge 29) &bull; Kl. --:--</span>
+            <!-- Kuvertens forside/flap -->
+            <div class="envelope-flap">
+                <div class="seal">A&K</div>
             </div>
             
-            <div class="info-box">
-                <strong>Fysisk Lokation</strong>
-                <span>Can Tho<br>Vietnam</span>
+            <!-- Kuvertens bagside (lommen kortet ligger i) -->
+            <div class="envelope-back">
+                <p>Tryk for at åbne</p>
             </div>
-            
-            <div class="section-title">Deltagelse (RSVP)</div>
-            <p style="font-size: 0.85rem; margin-bottom: 5px; color: var(--silver-mid);">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
-            <p style="font-size: 0.85rem; margin-bottom: 0; color: var(--silver-mid);">Giv os besked om I deltager fysisk eller online.</p>
-            
-            <div class="action-buttons">
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" class="btn btn-primary">Udfyld Tilmelding</a>
-                <a href="https://photos.app.goo.gl/WTLYUEcQoZqZJGWF6" target="_blank" class="btn btn-secondary">Del / Se Billeder Her</a>
-            </div>
-            
-            <div class="footer">
-                Vi glæder os meget til at se jer!<br>
-                <strong>Anh & Khuong</strong>
+
+            <!-- Selve indbydelsen -->
+            <div class="glass-card">
+                <h1>Sølvbryllup</h1>
+                <h2>Anh & Khuong inviterer til fejring af 25 års ægteskab</h2>
+                
+                <p><strong>Kære familie og venner.</strong><br><br>
+                Vi glæder os meget til at se jer. Uanset om I er med os fysisk eller følger med hjemmefra, betyder det alt for os, at I er der på dagen.</p>
+                
+                <div class="section-title">Tid & Sted</div>
+                
+                <div class="info-box">
+                    <strong>Dato og Tid</strong>
+                    <span>Offentliggøres senere<br>(Uge 29) &bull; Kl. --:--</span>
+                </div>
+                
+                <div class="info-box">
+                    <strong>Fysisk Lokation</strong>
+                    <span>Can Tho<br>Vietnam</span>
+                </div>
+                
+                <div class="section-title">Deltagelse (RSVP)</div>
+                <p style="font-size: 0.85rem; margin-bottom: 5px; color: var(--silver-mid);">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 0; color: var(--silver-mid);">Giv os besked om I deltager fysisk eller online.</p>
+                
+                <div class="action-buttons">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" class="btn btn-primary">Udfyld Tilmelding</a>
+                    <a href="https://photos.app.goo.gl/WTLYUEcQoZqZJGWF6" target="_blank" class="btn btn-secondary">Del / Se Billeder Her</a>
+                </div>
+                
+                <div class="footer">
+                    Vi glæder os meget til at se jer!<br>
+                    <strong>Anh & Khuong</strong>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Simpelt script til at udløse CSS-animationen -->
+    <script>
+        function openEnvelope() {
+            document.getElementById('invitationEnvelope').classList.add('is-open');
+        }
+    </script>
 </body>
 </html>
