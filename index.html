@@ -188,14 +188,17 @@
         opacity: 0.4;
     }
 
-    /* Sølv & Platin Voksforsegling præcist på spidsen af lukningen */
+    /* Helt rund og perfekt proportioneret voksforsegling på spidsen */
     .seal {
         position: absolute;
-        bottom: -28px;
+        bottom: -25px;
         left: 50%;
         transform: translateX(-50%);
-        width: clamp(56px, 13vw, 72px);
-        height: clamp(56px, 13vw, 72px);
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        min-height: 64px;
+        aspect-ratio: 1 / 1;
         background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e2e8f0 35%, #94a3b8 70%, #64748b 100%);
         border: 2px solid #ffffff;
         border-radius: 50%;
@@ -217,7 +220,7 @@
     .seal-monogram {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
-        font-size: clamp(1.05rem, 2.7vw, 1.35rem);
+        font-size: 1.2rem;
         letter-spacing: 1px;
         color: #101c2e;
         text-shadow: 
