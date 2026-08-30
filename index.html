@@ -2,7 +2,7 @@
 <html lang="da">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Anh & Khuong | 25 Års Sølvbryllup</title>
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,14 +14,6 @@
         --silver-mid: #b8b8b8;
         --glass-bg: rgba(15, 15, 20, 0.45);
         --glass-border: rgba(255, 255, 255, 0.2);
-        /* Wedding / paper colors */
-        --paper-white: #ffffff;
-        --paper-cream: #fbfaf8;
-        --paper-edge: rgba(0,0,0,0.06);
-        --foil-gold-1: #fff7e6;
-        --foil-gold-2: #f3d27a;
-        --foil-gold-3: #c79b2b;
-        --text-muted: #6e6e6e;
     }
 
     body, html {
@@ -35,7 +27,7 @@
         -webkit-font-smoothing: antialiased;
     }
 
-    /* Baggrund og overlay */
+    /* Baggrund og overlay (beholdt fra dit udgangspunkt) */
     .bg-image {
         position: fixed;
         top: 0;
@@ -59,11 +51,11 @@
         z-index: 1;
     }
 
-    /* --- 3D Kuvert Opsætning --- */
+    /* --- NYT: 3D Kuvert Opsætning --- */
     .perspective-container {
         position: relative;
         z-index: 2;
-        perspective: 1200px;
+        perspective: 1200px; /* Skaber 3D-dybden */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -77,75 +69,55 @@
         width: 100%;
         max-width: 400px;
         transform-style: preserve-3d;
-        cursor: pointer;
-        margin: 0 auto;
-        overflow: visible; /* allow card to move outside without being clipped */
     }
 
-    /* Envelope body container - holds flap and back together */
-    .envelope-body {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        transform-style: preserve-3d;
-    }
-
-    /* Kuvertens bagside (paper look) */
+    /* Selve Kuverten */
     .envelope-back {
-        position: relative;
+        position: absolute;
+        bottom: 0;
+        left: 0;
         width: 100%;
-        height: 100%;
-        background: linear-gradient(180deg, var(--paper-white) 0%, var(--paper-cream) 70%);
-        border: 1px solid rgba(0,0,0,0.06);
+        height: 80%;
+        background: rgba(10, 10, 15, 0.9);
+        border: 1px solid var(--glass-border);
         border-radius: 0 0 28px 28px;
-        box-shadow: 0 18px 40px rgba(0,0,0,0.25), inset 0 4px 12px rgba(255,255,255,0.6);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+        z-index: 3;
+        transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
         display: flex;
         align-items: flex-end;
         justify-content: center;
         padding-bottom: 30px;
-        min-height: 300px;
-        /* shorter transitions and no long delays so it doesn't block the card */
-        transition: opacity 0.36s ease 0s, transform 0.6s ease 0s;
-        z-index: 3;
-        overflow: hidden; /* clip the invitation so it can "emerge" */
     }
 
     .envelope-back p {
         font-family: 'Playfair Display', serif;
         font-style: italic;
-        color: var(--text-muted);
+        color: var(--silver-mid);
         letter-spacing: 2px;
         animation: pulseText 2s infinite;
         cursor: pointer;
-        margin: 0 0 12px 0;
     }
 
-    /* Flap */
+    /* Flappen der åbner i 3D */
     .envelope-flap {
         position: absolute;
-        top: 0;
+        top: 20%;
         left: 0;
         width: 100%;
-        height: 52%;
-        background: linear-gradient(135deg, var(--paper-white) 0%, #f6f6f6 60%);
-        border: 1px solid rgba(0,0,0,0.06);
+        height: 50%;
+        background: linear-gradient(135deg, rgba(25, 25, 30, 0.95), rgba(15, 15, 20, 0.95));
+        border: 1px solid var(--glass-border);
         border-bottom: none;
         border-radius: 28px 28px 0 0;
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
         transform-origin: top center;
-        z-index: 6; /* keep above the card while closed */
-        transform-style: preserve-3d;
-        /* keep the slow rotation for the flap but start the opacity fade early so it doesn't block */
-        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0s, opacity 0.5s ease 0.08s;
+        z-index: 5;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 8px 18px rgba(0,0,0,0.12);
-        background-image: radial-gradient(rgba(0,0,0,0.02) 0.5px, transparent 0.5px);
-        background-size: 6px 6px, auto;
     }
 
-    /* Seal (gold) */
+    /* Sølvseglet */
     .seal {
         position: absolute;
         bottom: -25px;
@@ -153,86 +125,201 @@
         transform: translateX(-50%);
         width: 60px;
         height: 60px;
-        background: radial-gradient(circle at 30% 30%, var(--foil-gold-1), var(--foil-gold-2), var(--foil-gold-3));
+        background: radial-gradient(circle at 30% 30%, #ffffff, #a8a8a8, #555);
         border-radius: 50%;
-        z-index: 7;
+        z-index: 6;
         display: flex;
         align-items: center;
         justify-content: center;
         font-family: 'Playfair Display', serif;
         font-weight: 700;
         font-size: 1.2rem;
-        color: #fff;
-        text-shadow: 0 1px 0 rgba(0,0,0,0.15);
-        box-shadow: 0 6px 18px rgba(0,0,0,0.28), inset 0 -4px 10px rgba(0,0,0,0.12);
+        color: #111;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 -2px 5px rgba(0,0,0,0.3);
         transition: all 0.5s ease;
         cursor: pointer;
-        border: 1px solid rgba(0,0,0,0.08);
     }
 
-    /* Invitation card — positioned so it sits inside the envelope pocket and can emerge */
+    /* Selve indbydelsen (Din oprindelige glass-card) */
     .glass-card {
-        position: absolute;
-        left: 50%;
-        bottom: 12px; /* tucked into the pocket */
-        transform: translateX(-50%) translateY(40%);
-        width: calc(100% - 40px);
-        max-width: 380px;
+        position: relative;
         background: var(--glass-bg);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         border: 1px solid var(--glass-border);
-        border-radius: 18px;
-        padding: 28px 22px;
+        border-radius: 28px;
+        padding: 45px 30px;
+        width: 100%;
         box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.05);
         text-align: center;
-        z-index: 2; /* below envelope-back while tucked */
+        z-index: 4;
+        
+        /* Start-tilstand: Skjult nede i kuverten */
         opacity: 0;
-        pointer-events: none;
-        /* keep a smooth emergence but no delay so it's readable immediately */
-        transition: left 0.6s ease, top 0.6s ease, transform 0.9s cubic-bezier(0.2, 0.9, 0.2, 1), opacity 0.36s ease 0s;
+        transform: translateY(60px) scale(0.9);
+        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none; /* Forhindrer klik før den er åbnet */
     }
 
-    /* When opened: flap rotates away and card "emerges" up and slightly forward */
-    /* flap rotation remains slow to preserve pacing */
+    /* --- ANIMATIONEN NÅR DEN ÅBNES --- */
     .envelope-wrapper.is-open .envelope-flap {
-        transform: rotateX(-150deg);
+        transform: rotateX(180deg);
         opacity: 0;
-        pointer-events: none;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.4s;
     }
 
-    .envelope-wrapper.is-open .seal { opacity: 0; pointer-events: none; }
+    .envelope-wrapper.is-open .seal {
+        transform: translateX(-50%) scale(1.5);
+        opacity: 0;
+    }
 
-    /* move the back behind the card sooner so it won't occlude during animation */
     .envelope-wrapper.is-open .envelope-back {
         opacity: 0;
         transform: translateY(50px);
         pointer-events: none;
-        z-index: 1; /* ensure back is behind the card while open */
     }
 
-    /* center the card in the viewport when open */
     .envelope-wrapper.is-open .glass-card {
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        bottom: auto;
-        transform: translate(-50%, -50%) scale(1.02);
-        width: min(92vw, 380px);
         opacity: 1;
-        pointer-events: auto;
-        z-index: 999; /* ensure it's on top of the flap & back */
-        transition-delay: 0s; /* show immediately */
+        transform: translateY(0) scale(1);
+        pointer-events: auto; /* Tillader nu klik på knapper */
+        transition-delay: 0.3s; /* Venter på at flappen er åbnet */
     }
 
-    /* Text + buttons (keep styles similar) */
+    /* Eksisterende styling til tekst og knapper fra dit udgangspunkt */
     h1 {
         font-family: 'Playfair Display', serif;
-        font-size: 2.2rem;
-        margin: 0 0 8px 0;
-        color: #fff;
-        -webkit-text-fill-color: initial;
-        background: none;
+        font-size: 2.8rem;
+        margin: 0 0 10px 0;
+        background: linear-gradient(to right, #e0e0e0, #ffffff, #a8a8a8, #e0e0e0);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0px 4px 20px rgba(255,255,255,0.1);
+        animation: shine 5s linear infinite;
     }
 
-We need to finish content; but create_or_update_file content must be full file. We must include modified CSS for .action-buttons earlier; in current content .action-buttons remains column. We need to change to center. So in our content, replace .action-buttons and .btn styles. In our content we included later partial; need to craft full file with changes. The tool call already included content truncated at line ~236; but we must ensure we supply complete file content. The create_or_update_file tool call in comment used previous sha bd8e..., and then returned success earlier. Now need to update again with modifications. Compose full file content again but with .action-buttons: display:flex; flex-direction:row; justify-content:center; gap:12px; margin-top:18px; and .btn { width: auto; min-width: 160px; padding:12px 20px } and in mobile media query set .action-buttons flex-direction: column and .btn width:100% maybe. Let's prepare full content identical to latest file but with those CSS edits. Need to provide sha equal to latest file's blob sha: from last getfile, sha was bd8e799... but after commits it's bd8e799a...? We looked earlier: functions.create_or_update_file returned commit sha bd8e... then later returns other commit. The latest getfile earlier returned sha bd8e799a8e... Indeed functions.getfile earlier at top returned that as BlobSha? In the last getfile call, the displayed header shows CommitOID 34aa269d... BlobSha bd8e799... In create_or_update_file we must pass current file sha which is bd8e799a8e89d... Wait after last create_or_update_file, repo updated and sha changed to bd8e799a... function returned and gave new sha as bd8e... We must use the latest file's sha - it's bd8e799a8e89d181e2c88df8c1d259cb90f392b7 from previous functions output. Good to use that as sha param in create_or_update_file to update file. Let's craft content string fully. Use owner hokhuong-stack, repo soelvbryllup, path index.html, sha set. Use branch null. commit message like 
+    h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.1rem;
+        font-weight: 400;
+        font-style: italic;
+        color: var(--silver-mid);
+        margin: 0 0 35px 0;
+        line-height: 1.4;
+    }
+
+    p { font-size: 0.95rem; line-height: 1.7; margin: 0 0 25px 0; font-weight: 300; color: #eaeaea; }
+    
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        margin: 35px 0 20px 0;
+        color: #fff;
+        position: relative;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 4px;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        width: 50%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        bottom: -10px;
+        left: 25%;
+    }
+
+    .info-box {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .info-box strong { font-weight: 500; color: var(--silver-mid); display: block; margin-bottom: 8px; letter-spacing: 1.5px; font-size: 0.75rem; text-transform: uppercase; }
+    .info-box span { font-size: 1.1rem; font-family: 'Playfair Display', serif; color: #fff; display: block; line-height: 1.4; }
+
+    .action-buttons { display: flex; flex-direction: column; gap: 15px; margin-top: 35px; }
+
+    .btn {
+        display: inline-flex; justify-content: center; align-items: center; width: 100%; padding: 18px 20px;
+        border-radius: 30px; text-decoration: none; font-weight: 500; font-size: 0.85rem; letter-spacing: 2px;
+        text-transform: uppercase; box-sizing: border-box; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent;
+    }
+    .btn-primary { background: linear-gradient(135deg, #ffffff, #b0b0b0); color: #111; border: none; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+    .btn-secondary { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.3); color: #fff; }
+    
+    .footer { margin-top: 50px; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #ccc; font-style: italic; }
+    .footer strong { display: block; margin-top: 10px; font-size: 1.5rem; color: #fff; font-style: normal; background: linear-gradient(to right, #fff, #a8a8a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    @keyframes shine { to { background-position: 200% center; } }
+    @keyframes pulseText { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+</style>
+</head>
+<body>
+    <div class="bg-image"></div>
+    <div class="overlay"></div>
+    
+    <div class="perspective-container">
+        <!-- Wrapperen der styrer åbningen -->
+        <div class="envelope-wrapper" id="invitationEnvelope" onclick="openEnvelope()">
+            
+            <!-- Kuvertens forside/flap -->
+            <div class="envelope-flap">
+                <div class="seal">A&K</div>
+            </div>
+            
+            <!-- Kuvertens bagside (lommen kortet ligger i) -->
+            <div class="envelope-back">
+                <p>Tryk for at åbne</p>
+            </div>
+
+            <!-- Selve indbydelsen -->
+            <div class="glass-card">
+                <h1>Sølvbryllup</h1>
+                <h2>Anh & Khuong inviterer til fejring af 25 års ægteskab</h2>
+                
+                <p><strong>Kære familie og venner.</strong><br><br>
+                Vi glæder os meget til at se jer. Uanset om I er med os fysisk eller følger med hjemmefra, betyder det alt for os, at I er der på dagen.</p>
+                
+                <div class="section-title">Tid & Sted</div>
+                
+                <div class="info-box">
+                    <strong>Dato og Tid</strong>
+                    <span>Offentliggøres senere<br>(Uge 29) &bull; Kl. --:--</span>
+                </div>
+                
+                <div class="info-box">
+                    <strong>Fysisk Lokation</strong>
+                    <span>Can Tho<br>Vietnam</span>
+                </div>
+                
+                <div class="section-title">Deltagelse (RSVP)</div>
+                <p style="font-size: 0.85rem; margin-bottom: 5px; color: var(--silver-mid);">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
+                <p style="font-size: 0.85rem; margin-bottom: 0; color: var(--silver-mid);">Giv os besked om I deltager fysisk eller online.</p>
+                
+                <div class="action-buttons">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" class="btn btn-primary">Udfyld Tilmelding</a>
+                    <a href="https://photos.app.goo.gl/WTLYUEcQoZqZJGWF6" target="_blank" class="btn btn-secondary">Del / Se Billeder Her</a>
+                </div>
+                
+                <div class="footer">
+                    Vi glæder os meget til at se jer!<br>
+                    <strong>Anh & Khuong</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simpelt script til at udløse CSS-animationen -->
+    <script>
+        function openEnvelope() {
+            document.getElementById('invitationEnvelope').classList.add('is-open');
+        }
+    </script>
+</body>
+</html>
