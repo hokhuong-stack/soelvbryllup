@@ -105,7 +105,7 @@
         aspect-ratio: 1;
     }
 
-    /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER ===== */
+    /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER & BRYLLUPSEFFEKTER ===== */
     
     /* Envelope Back */
     .envelope-back {
@@ -127,6 +127,7 @@
         align-items: flex-end;
         justify-content: center;
         padding-bottom: var(--padding-sm);
+        overflow: hidden;
     }
 
     /* Dekorativ sølvlinje på kuvertbunden */
@@ -139,6 +140,7 @@
         height: 1px;
         background: linear-gradient(90deg, transparent, var(--silver-light), transparent);
         opacity: 0.6;
+        z-index: 2;
     }
 
     .envelope-back p {
@@ -154,6 +156,7 @@
         text-align: center;
         font-weight: 500;
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        z-index: 2;
     }
 
     /* Envelope Flap */
@@ -174,6 +177,7 @@
         cursor: pointer;
         touch-action: manipulation;
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 20px rgba(0,0,0,0.4);
+        overflow: hidden;
     }
 
     .envelope-flap::before {
@@ -188,55 +192,43 @@
         opacity: 0.4;
     }
 
-    /* Helt rund og perfekt proportioneret voksforsegling på spidsen */
-    .seal {
+    /* --- SØLV BRYLLUPSEFFEKTER PÅ KUVERTEN --- */
+    .wedding-sparkles {
         position: absolute;
-        bottom: -25px;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 4;
+    }
+
+    .sparkle-icon {
+        position: absolute;
+        color: var(--silver-light);
+        font-size: 0.9rem;
+        opacity: 0.6;
+        animation: slowTwinkle 3s ease-in-out infinite;
+    }
+
+    /* Forskellige placeringer og tidsindstillinger for funklende sølveffekter */
+    .sparkle-icon:nth-child(1) { top: 35%; left: 18%; animation-delay: 0s; font-size: 0.7rem; }
+    .sparkle-icon:nth-child(2) { top: 45% sacerdote; right: 20%; animation-delay: 1s; font-size: 1rem; }
+    .sparkle-icon:nth-child(3) { top: 60%; left: 25%; animation-delay: 0.5s; font-size: 0.8rem; }
+    .sparkle-icon:nth-child(4) { top: 75%; right: 28%; animation-delay: 1.5s; font-size: 0.7rem; }
+    .sparkle-icon:nth-child(5) { top: 28%; left: 50%; transform: translateX(-50%); animation-delay: 0.8s; font-size: 1.1rem; }
+
+    /* Fine sølv-buer/ornamenter på flappen */
+    .flap-ornament {
+        position: absolute;
+        bottom: 15px;
         left: 50%;
         transform: translateX(-50%);
-        width: 64px;
-        height: 64px;
-        min-width: 64px;
-        min-height: 64px;
-        aspect-ratio: 1 / 1;
-        background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e2e8f0 35%, #94a3b8 70%, #64748b 100%);
-        border: 2px solid #ffffff;
+        width: 120px;
+        height: 30px;
+        border-bottom: 1px solid rgba(226, 232, 240, 0.3);
         border-radius: 50%;
-        z-index: 6;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 
-            0 10px 25px rgba(0, 0, 0, 0.5),
-            0 0 15px rgba(226, 232, 240, 0.4),
-            inset 0 -3px 6px rgba(0, 0, 0, 0.4),
-            inset 0 3px 6px rgba(255, 255, 255, 0.9);
-        transition: all 0.5s ease;
-        cursor: pointer;
-        touch-action: manipulation;
-    }
-
-    /* "A&K" Monogram i forseglingen med mørkeblå indgraveret effekt */
-    .seal-monogram {
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-        font-size: 1.2rem;
-        letter-spacing: 1px;
-        color: #101c2e;
-        text-shadow: 
-            0px 1px 1px rgba(255, 255, 255, 0.8),
-            0px -1px 1px rgba(0, 0, 0, 0.6);
-        user-select: none;
-    }
-
-    .seal::before {
-        content: '✦';
-        position: absolute;
-        top: -15px;
-        animation: sparkle 2s infinite;
-        color: var(--silver-light);
-        opacity: 0;
-        font-size: 1.2rem;
+        pointer-events: none;
     }
 
     /* Glass Card - tone-i-tone mørkeblå */
@@ -270,15 +262,6 @@
         transform: rotateX(180deg);
         opacity: 0;
         transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.4s;
-    }
-
-    .envelope-wrapper.is-open .seal {
-        transform: translateX(-50%) scale(1.4) rotateZ(180deg);
-        opacity: 0;
-    }
-
-    .envelope-wrapper.is-open .seal::before {
-        animation: sparkleOpen 0.8s ease-out forwards;
     }
 
     .envelope-wrapper.is-open .envelope-back {
@@ -484,14 +467,9 @@
         100% { opacity: 0.6; }
     }
 
-    @keyframes sparkle {
-        0%, 100% { opacity: 0; transform: translate(0, 0) scale(1); }
-        50% { opacity: 1; transform: translate(5px, -5px) scale(1.2); }
-    }
-
-    @keyframes sparkleOpen {
-        0% { opacity: 1; transform: translate(0, 0) scale(1); }
-        100% { opacity: 0; transform: translate(10px, -20px) scale(0.5); }
+    @keyframes slowTwinkle {
+        0%, 100% { opacity: 0.3; transform: scale(0.9); }
+        50% { opacity: 0.9; transform: scale(1.1); }
     }
 
     @keyframes floatUp {
@@ -529,7 +507,6 @@
     }
 
     @media (max-width: 380px) {
-        .seal { bottom: -22px; }
         .section-title { letter-spacing: 2px; }
         .glass-card { border-radius: 20px; }
     }
@@ -557,14 +534,25 @@
     <div class="perspective-container">
         <div class="envelope-wrapper" id="invitationEnvelope" role="button" tabindex="0" onclick="openEnvelope()" onkeypress="handleKeyPress(event)">
             
+            <!-- Kuvertens flap med sølv bryllupseffekter -->
             <div class="envelope-flap" aria-label="Tryk for at åbne kuvert">
-                <!-- Voksforsegling med A&K Monogram -->
-                <div class="seal">
-                    <span class="seal-monogram">A&amp;K</span>
+                <div class="wedding-sparkles">
+                    <span class="sparkle-icon">✦</span>
+                    <span class="sparkle-icon">✦</span>
+                    <span class="sparkle-icon">✦</span>
+                    <span class="sparkle-icon">✦</span>
+                    <span class="sparkle-icon">✦</span>
                 </div>
+                <div class="flap-ornament"></div>
             </div>
             
             <div class="envelope-back">
+                <div class="wedding-sparkles" style="opacity: 0.7;">
+                    <span class="sparkle-icon" style="top: 20%; left: 15%;">✦</span>
+                    <span class="sparkle-icon" style="top: 30%; right: 18%;">✦</span>
+                    <span class="sparkle-icon" style="top: 50%; left: 20%;">✦</span>
+                    <span class="sparkle-icon" style="top: 40%; right: 22%;">✦</span>
+                </div>
                 <p>Tryk for at åbne</p>
             </div>
 
