@@ -393,11 +393,12 @@
                     setTimeout(() => {
                         const card = wrapper.querySelector('.glass-card');
                         if (card) {
-                            // Compute top position of the card relative to viewport and scroll so card is near top
+                            // Compute top position of the card relative to viewport and scroll so card is vertically centered
                             const rect = card.getBoundingClientRect();
-                            const offset = 18; // px from top
+                            // Calculate amount to scroll so the card's center aligns with viewport center
+                            const scrollTop = rect.top + (rect.height / 2) - (window.innerHeight / 2);
                             // Use smooth scroll; prefer scrollBy so we can offset
-                            window.scrollBy({ top: rect.top - offset, left: 0, behavior: 'smooth' });
+                            window.scrollBy({ top: scrollTop, left: 0, behavior: 'smooth' });
                             // Also focus the first interactive element (the RSVP button) for convenience
                             const firstButton = card.querySelector('.btn');
                             if (firstButton) firstButton.focus({ preventScroll: true });
