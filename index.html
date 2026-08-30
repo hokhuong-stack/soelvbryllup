@@ -69,6 +69,7 @@
         width: 100%;
         max-width: 400px;
         transform-style: preserve-3d;
+        cursor: pointer;
     }
 
     /* Selve Kuverten */
@@ -266,6 +267,47 @@
 
     @keyframes shine { to { background-position: 200% center; } }
     @keyframes pulseText { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+    /* --- MOBILE ADJUSTMENTS: make the envelope vertically about half a phone's viewport height --- */
+    @media (max-width: 600px) {
+        .perspective-container {
+            align-items: flex-start; /* allow the envelope to sit toward the top */
+            padding-top: 6vh;
+            padding-bottom: 6vh;
+        }
+
+        /* Set the envelope to occupy roughly half the viewport height */
+        .envelope-wrapper {
+            max-width: 360px;
+            width: 90%;
+            height: 50vh; /* <-- half phone height */
+            margin: 0 auto;
+        }
+
+        /* Let the inner parts use proportional heights so they scale */
+        .envelope-back { height: 64%; padding-bottom: 18px; }
+        .envelope-flap { top: 10%; height: 52%; }
+        .seal { bottom: -20px; width: 50px; height: 50px; font-size: 1rem; }
+
+        /* Make the card a bit smaller inside the constrained envelope */
+        .glass-card {
+            padding: 30px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        /* When opened, ensure the card is readable near the top of the viewport */
+        .envelope-wrapper.is-open {
+            /* keep wrapper at same size but allow scrolling to bring card into view via JS */
+        }
+
+        /* Slightly reduce heading sizes on small screens */
+        h1 { font-size: 2rem; }
+        h2 { font-size: 1rem; margin-bottom: 20px; }
+
+        /* Ensure action buttons don't overflow */
+        .action-buttons { gap: 12px; }
+    }
 </style>
 </head>
 <body>
@@ -274,7 +316,7 @@
     
     <div class="perspective-container">
         <!-- Wrapperen der styrer åbningen -->
-        <div class="envelope-wrapper" id="invitationEnvelope" onclick="openEnvelope()">
+        <div class="envelope-wrapper" id="invitationEnvelope" onclick="openEnvelope()" tabindex="0" role="button" aria-pressed="false" aria-label="Åben indbydelse">
             
             <!-- Kuvertens forside/flap -->
             <div class="envelope-flap">
@@ -323,11 +365,44 @@
         </div>
     </div>
 
-    <!-- Simpelt script til at udløse CSS-animationen -->
+    <!-- Simpelt script til at udløse CSS-animationen og fokus/scroll på mobil -->
     <script>
         function openEnvelope() {
-            document.getElementById('invitationEnvelope').classList.add('is-open');
+            const wrapper = document.getElementById('invitationEnvelope');
+            if (!wrapper.classList.contains('is-open')) {
+                wrapper.classList.add('is-open');
+                wrapper.setAttribute('aria-pressed', 'true');
+
+                // On small screens, bring the revealed card near the top so it's easy to read
+                if (window.innerWidth <= 600) {
+                    // wait for the flap animation to finish a bit so layout has settled
+                    setTimeout(() => {
+                        const card = wrapper.querySelector('.glass-card');
+                        if (card) {
+                            // Compute top position of the card relative to viewport and scroll so card is near top
+                            const rect = card.getBoundingClientRect();
+                            const offset = 18; // px from top
+                            // Use smooth scroll; prefer scrollBy so we can offset
+                            window.scrollBy({ top: rect.top - offset, left: 0, behavior: 'smooth' });
+                            // Also focus the first interactive element (the RSVP button) for convenience
+                            const firstButton = card.querySelector('.btn');
+                            if (firstButton) firstButton.focus({ preventScroll: true });
+                        }
+                    }, 650);
+                }
+            }
         }
+
+        // Make envelope operable with keyboard (Enter/Space)
+        (function() {
+            const wrapper = document.getElementById('invitationEnvelope');
+            wrapper.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openEnvelope();
+                }
+            });
+        })();
     </script>
 </body>
 </html>
