@@ -20,11 +20,14 @@
         --text-light: #f8fafc;
         --text-secondary: #94a3b8;
         
-        /* Sølvbryllup Tema Farver */
+        /* Sølvbryllup & Rød Voks Tema Farver */
         --silver-main: #b4b9be;
         --silver-light: #e2e8f0;
         --silver-dark: #8492a6;
         --silver-accent: #ffffff;
+        --wax-red: #c0392b;
+        --wax-red-dark: #962d22;
+        --wax-red-light: #e74c3c;
         
         /* Mobile-first spacing */
         --padding-xs: 12px;
@@ -175,29 +178,16 @@
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 20px rgba(0,0,0,0.4);
     }
 
-    /* Decorative elements on flap */
-    .envelope-flap::before {
-        content: '';
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 80px;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--silver-light), transparent);
-        opacity: 0.4;
-    }
-
-    /* Silver/Platinum Seal - Placeret i spidsen af flappen */
+    /* Rød Voksforsegling med sølv monogram - Placeret øverst på kuverten/flappen */
     .seal {
         position: absolute;
-        bottom: 0px;
+        top: 5px; /* Placeret helt oppe i toppen ved folden */
         left: 50%;
         transform: translateX(-50%);
         width: clamp(50px, 12vw, 70px);
         height: clamp(50px, 12vw, 70px);
-        background: radial-gradient(circle at 30% 30%, #ffffff, var(--silver-light), var(--silver-dark));
-        border: 3px solid var(--silver-accent);
+        background: radial-gradient(circle at 30% 30%, var(--wax-red-light), var(--wax-red), var(--wax-red-dark));
+        border: 3px solid rgba(255, 255, 255, 0.4);
         border-radius: 50%;
         z-index: 6;
         display: flex;
@@ -206,12 +196,12 @@
         font-family: 'Playfair Display', serif;
         font-weight: 700;
         font-size: clamp(1rem, 2.5vw, 1.4rem);
-        color: var(--blue-dark);
-        text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
+        color: var(--silver-light);
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
         box-shadow: 
-            0 8px 20px rgba(0, 0, 0, 0.4),
-            inset 0 -2px 6px rgba(0,0,0,0.25),
-            inset 0 2px 6px rgba(255,255,255,0.9);
+            0 8px 20px rgba(0, 0, 0, 0.5),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.5),
+            inset 0 3px 6px rgba(255, 255, 255, 0.4);
         transition: all 0.5s ease;
         cursor: pointer;
         touch-action: manipulation;
@@ -223,7 +213,7 @@
         position: absolute;
         top: -15px;
         animation: sparkle 2s infinite;
-        color: var(--silver-accent);
+        color: var(--silver-light);
         opacity: 0;
         font-size: 1.2rem;
         text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
@@ -359,7 +349,7 @@
         position: absolute;
         width: 60%;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--silver-light), transparent);
+        background: linear-gradient(90deg, transparent, rgba(74, 144, 226, 0.8), transparent);
         bottom: -12px;
         left: 20%;
     }
@@ -537,10 +527,6 @@
 
     /* Very small screens (320px) */
     @media (max-width: 380px) {
-        .seal {
-            bottom: 0px;
-        }
-
         .section-title {
             letter-spacing: 2px;
         }
@@ -576,7 +562,7 @@
         <div class="envelope-wrapper" id="invitationEnvelope" role="button" tabindex="0" onclick="openEnvelope()" onkeypress="handleKeyPress(event)">
             
             <div class="envelope-flap" aria-label="Tryk for at åbne kuvert">
-                <!-- Sølv/Platin voksforsegling placeret i spidsen af flappen -->
+                <!-- Rød voksforsegling med sølv monogram øverst på flappen -->
                 <div class="seal">A&amp;K</div>
             </div>
             
