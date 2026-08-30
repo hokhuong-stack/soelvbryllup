@@ -72,23 +72,30 @@
         cursor: pointer;
     }
 
-    /* Selve Kuverten */
-    .envelope-back {
-        position: absolute;
-        bottom: 0;
-        left: 0;
+    /* Envelope body container - holds flap and back together */
+    .envelope-body {
+        position: relative;
         width: 100%;
-        height: 80%;
+        height: 100%;
+        transform-style: preserve-3d;
+    }
+
+    /* Selve Kuverten bagside (lommen kortet ligger i) */
+    .envelope-back {
+        position: relative;
+        width: 100%;
+        height: 100%;
         background: rgba(10, 10, 15, 0.9);
         border: 1px solid var(--glass-border);
         border-radius: 0 0 28px 28px;
         box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-        z-index: 3;
-        transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
         display: flex;
         align-items: flex-end;
         justify-content: center;
         padding-bottom: 30px;
+        min-height: 300px;
+        transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
+        z-index: 3;
     }
 
     .envelope-back p {
@@ -100,22 +107,25 @@
         cursor: pointer;
     }
 
-    /* Flappen der åbner i 3D */
+    /* Flappen der åbner i 3D - now a proper rectangle that fits */
     .envelope-flap {
         position: absolute;
-        top: 20%;
+        top: 0;
         left: 0;
         width: 100%;
-        height: 50%;
+        height: 52%;
         background: linear-gradient(135deg, rgba(25, 25, 30, 0.95), rgba(15, 15, 20, 0.95));
         border: 1px solid var(--glass-border);
         border-bottom: none;
         border-radius: 28px 28px 0 0;
-        clip-path: polygon(0 0, 100% 0, 50% 100%);
         transform-origin: top center;
         z-index: 5;
+        transform-style: preserve-3d;
         transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     /* Sølvseglet */
@@ -164,14 +174,15 @@
 
     /* --- ANIMATIONEN NÅR DEN ÅBNES --- */
     .envelope-wrapper.is-open .envelope-flap {
-        transform: rotateX(180deg);
+        transform: rotateX(-150deg);
         opacity: 0;
-        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.4s;
+        pointer-events: none;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease 0.3s;
     }
 
     .envelope-wrapper.is-open .seal {
-        transform: translateX(-50%) scale(1.5);
         opacity: 0;
+        pointer-events: none;
     }
 
     .envelope-wrapper.is-open .envelope-back {
@@ -285,8 +296,8 @@
         }
 
         /* Let the inner parts use proportional heights so they scale */
-        .envelope-back { height: 64%; padding-bottom: 18px; }
-        .envelope-flap { top: 10%; height: 52%; }
+        .envelope-back { min-height: 250px; padding-bottom: 18px; }
+        .envelope-flap { height: 52%; }
         .seal { bottom: -20px; width: 50px; height: 50px; font-size: 1rem; }
 
         /* Make the card a bit smaller inside the constrained envelope */
@@ -318,14 +329,17 @@
         <!-- Wrapperen der styrer åbningen -->
         <div class="envelope-wrapper" id="invitationEnvelope" onclick="openEnvelope()" tabindex="0" role="button" aria-pressed="false" aria-label="Åben indbydelse">
             
-            <!-- Kuvertens forside/flap -->
-            <div class="envelope-flap">
-                <div class="seal">A&K</div>
-            </div>
-            
-            <!-- Kuvertens bagside (lommen kortet ligger i) -->
-            <div class="envelope-back">
-                <p>Tryk for at åbne</p>
+            <!-- Envelope body container -->
+            <div class="envelope-body">
+                <!-- Kuvertens bagside (lommen kortet ligger i) -->
+                <div class="envelope-back">
+                    <p>Tryk for at åbne</p>
+                </div>
+
+                <!-- Kuvertens forside/flap der åbner over bagsiden -->
+                <div class="envelope-flap">
+                    <div class="seal">A&K</div>
+                </div>
             </div>
 
             <!-- Selve indbydelsen -->
