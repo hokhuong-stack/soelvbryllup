@@ -19,8 +19,13 @@
         --blue-text: #0f1f3f;
         --text-light: #f8fafc;
         --text-secondary: #64748b;
-        --gold: #d4a574;
-        --gold-light: #e8c9a0;
+        
+        /* Sølvbryllup Tema Farver */
+        --silver-main: #b4b9be;
+        --silver-light: #e2e8f0;
+        --silver-dark: #8492a6;
+        --silver-accent: #ffffff;
+        
         /* Mobile-first spacing */
         --padding-xs: 12px;
         --padding-sm: 16px;
@@ -95,14 +100,13 @@
         width: 100%;
         max-width: 400px;
         transform-style: preserve-3d;
-        /* Ensure it fits on smallest screens */
         min-height: 500px;
         aspect-ratio: 1;
     }
 
-    /* ===== WHITE ENVELOPE STYLING ===== */
+    /* ===== WHITE ENVELOPE STYLING (SILVER THEME) ===== */
     
-    /* Envelope Back - White with gold trim */
+    /* Envelope Back - White with silver trim */
     .envelope-back {
         position: absolute;
         bottom: 0;
@@ -110,12 +114,12 @@
         width: 100%;
         height: 80%;
         background: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 50%, #f0f0f0 100%);
-        border: 2px solid var(--gold);
+        border: 2px solid var(--silver-main);
         border-radius: 0 0 28px 28px;
         box-shadow: 
             0 20px 60px rgba(0,0,0,0.15),
             inset 0 1px 0 rgba(255,255,255,0.8),
-            0 0 30px rgba(212, 165, 116, 0.2);
+            0 0 30px rgba(180, 185, 190, 0.25);
         z-index: 3;
         transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
         display: flex;
@@ -132,14 +136,14 @@
         left: 5%;
         right: 5%;
         height: 2px;
-        background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
-        opacity: 0.6;
+        background: linear-gradient(90deg, var(--silver-dark), var(--silver-light), var(--silver-dark));
+        opacity: 0.5;
     }
 
     .envelope-back p {
         font-family: 'Playfair Display', serif;
         font-style: italic;
-        color: var(--gold);
+        color: var(--silver-dark);
         letter-spacing: 2px;
         animation: pulseText 2s infinite;
         cursor: pointer;
@@ -147,10 +151,10 @@
         margin: 0;
         padding: 0 var(--padding-sm);
         text-align: center;
-        font-weight: 500;
+        font-weight: 600;
     }
 
-    /* Envelope Flap - White triangular flap with gold edge */
+    /* Envelope Flap - White triangular flap with silver edge */
     .envelope-flap {
         position: absolute;
         top: 20%;
@@ -158,7 +162,7 @@
         width: 100%;
         height: 50%;
         background: linear-gradient(135deg, #ffffff 0%, #fafafa 50%, #f5f5f5 100%);
-        border: 2px solid var(--gold);
+        border: 2px solid var(--silver-main);
         border-bottom: none;
         border-radius: 28px 28px 0 0;
         clip-path: polygon(0 0, 100% 0, 50% 100%);
@@ -167,7 +171,7 @@
         transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
         touch-action: manipulation;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 5px 15px rgba(0,0,0,0.1);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 5px 15px rgba(0,0,0,0.08);
     }
 
     /* Decorative elements on flap */
@@ -179,11 +183,11 @@
         transform: translateX(-50%);
         width: 80px;
         height: 1px;
-        background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
-        opacity: 0.5;
+        background: linear-gradient(90deg, transparent, var(--silver-dark), transparent);
+        opacity: 0.3;
     }
 
-    /* Gold Seal - Enhanced luxury appearance */
+    /* Silver/Platinum Seal */
     .seal {
         position: absolute;
         bottom: -25px;
@@ -191,8 +195,8 @@
         transform: translateX(-50%);
         width: clamp(50px, 12vw, 70px);
         height: clamp(50px, 12vw, 70px);
-        background: radial-gradient(circle at 30% 30%, #ffd700, var(--gold), #b8860b);
-        border: 3px solid var(--gold-light);
+        background: radial-gradient(circle at 30% 30%, #ffffff, var(--silver-light), var(--silver-dark));
+        border: 3px solid var(--silver-accent);
         border-radius: 50%;
         z-index: 6;
         display: flex;
@@ -201,11 +205,12 @@
         font-family: 'Playfair Display', serif;
         font-weight: 700;
         font-size: clamp(1rem, 2.5vw, 1.4rem);
-        color: #fff;
+        color: var(--blue-dark);
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.8);
         box-shadow: 
-            0 8px 20px rgba(212, 165, 116, 0.4),
-            inset 0 -2px 5px rgba(0,0,0,0.3),
-            inset 0 2px 5px rgba(255,255,255,0.3);
+            0 8px 20px rgba(132, 146, 166, 0.4),
+            inset 0 -2px 6px rgba(0,0,0,0.25),
+            inset 0 2px 6px rgba(255,255,255,0.9);
         transition: all 0.5s ease;
         cursor: pointer;
         touch-action: manipulation;
@@ -217,9 +222,10 @@
         position: absolute;
         top: -15px;
         animation: sparkle 2s infinite;
-        color: var(--gold-light);
+        color: var(--silver-accent);
         opacity: 0;
         font-size: 1.2rem;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
     }
 
     /* Glass Card - Invitation with blue theme */
@@ -278,7 +284,7 @@
         transition-delay: 0.3s;
     }
 
-    /* Particle effects on open */
+    /* Particle effects on open (Silver) */
     .particles {
         position: absolute;
         width: 100%;
@@ -293,9 +299,10 @@
         position: absolute;
         width: 4px;
         height: 4px;
-        background: var(--gold-light);
+        background: var(--silver-light);
         border-radius: 50%;
         pointer-events: none;
+        box-shadow: 0 0 6px var(--silver-accent);
     }
 
     /* Typography - Mobile Optimized */
@@ -579,6 +586,9 @@
             <div class="envelope-back">
                 <p>Tryk for at åbne</p>
             </div>
+            
+            <!-- Sølv/Platin voksforsegling -->
+            <div class="seal">A&amp;K</div>
 
             <div class="particles" id="particles"></div>
 
