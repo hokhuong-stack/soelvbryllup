@@ -7,7 +7,7 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis2.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
     :root {
         --silver-light: #f5f5f5;
@@ -78,6 +78,7 @@
         max-width: 400px;
         transform-style: preserve-3d;
         cursor: pointer;
+        margin: 0 auto; /* ensure centered */
     }
 
     /* Envelope body container - holds flap and back together */
@@ -299,6 +300,16 @@
             align-items: flex-start; /* allow the envelope to sit toward the top */
             padding-top: 6vh;
             padding-bottom: 6vh;
+            padding-left: 12px; /* reduce horizontal paddings to avoid visual right-shift */
+            padding-right: 12px;
+            box-sizing: border-box;
+        }
+
+        /* When opened, center the container vertically */
+        .perspective-container.center-on-open {
+            align-items: center;
+            padding-top: 4vh;
+            padding-bottom: 4vh;
         }
 
         /* Set the envelope to occupy roughly half the viewport height */
@@ -307,6 +318,7 @@
             width: 90%;
             height: 50vh; /* <-- half phone height */
             margin: 0 auto;
+            left: 0; right: 0;
         }
 
         /* Let the inner parts use proportional heights so they scale */
@@ -319,6 +331,9 @@
             padding: 30px 20px;
             border-radius: 20px;
             font-size: 0.95rem;
+            margin: 0 auto; /* ensure centered */
+            box-sizing: border-box;
+            max-width: 100%;
         }
 
         /* When opened, ensure the card is readable near the top of the viewport */
@@ -397,26 +412,31 @@
     <script>
         function openEnvelope() {
             const wrapper = document.getElementById('invitationEnvelope');
+            const container = document.querySelector('.perspective-container');
             if (!wrapper.classList.contains('is-open')) {
                 wrapper.classList.add('is-open');
+                if (container) container.classList.add('center-on-open');
                 wrapper.setAttribute('aria-pressed', 'true');
 
                 // On small screens, bring the revealed card near the top so it's easy to read
                 if (window.innerWidth <= 600) {
                     // wait for the flap animation to finish a bit so layout has settled
                     setTimeout(() => {
-                        const card = wrapper.querySelector('.glass-card');
-                        if (card) {
-                            // Compute top position of the card relative to viewport and scroll so card is vertically centered
-                            const rect = card.getBoundingClientRect();
-                            // Calculate amount to scroll so the card's center aligns with viewport center
-                            const scrollTop = rect.top + (rect.height / 2) - (window.innerHeight / 2);
-                            // Use smooth scroll; prefer scrollBy so we can offset
-                            window.scrollBy({ top: scrollTop, left: 0, behavior: 'smooth' });
-                            // Also focus the first interactive element (the RSVP button) for convenience
-                            const firstButton = card.querySelector('.btn');
-                            if (firstButton) firstButton.focus({ preventScroll: true });
+                        // Prefer scrolling the wrapper so horizontal centering is preserved
+                        if (wrapper && wrapper.scrollIntoView) {
+                            wrapper.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
+                        } else {
+                            const card = wrapper.querySelector('.glass-card');
+                            if (card) {
+                                const rect = card.getBoundingClientRect();
+                                const scrollTop = rect.top + (rect.height / 2) - (window.innerHeight / 2);
+                                window.scrollBy({ top: scrollTop, left: 0, behavior: 'smooth' });
+                            }
                         }
+
+                        // Also focus the first interactive element (the RSVP button) for convenience
+                        const firstButton = wrapper.querySelector('.btn');
+                        if (firstButton) firstButton.focus({ preventScroll: true });
                     }, 650);
                 }
             }
