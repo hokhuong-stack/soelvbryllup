@@ -27,6 +27,11 @@
         --silver-mid: #cbd5e1;
         --silver-dark: #94a3b8;
         --silver-border: rgba(226, 232, 240, 0.45);
+
+        /* Rød voksforsegling farver */
+        --wax-red: #c0392b;
+        --wax-red-dark: #962d22;
+        --wax-red-light: #e74c3c;
         
         /* Mobile-first spacing */
         --padding-xs: 12px;
@@ -180,19 +185,40 @@
         overflow: hidden;
     }
 
-    .envelope-flap::before {
-        content: '';
+    /* --- RØD VOKSFORSEGLING ØVERST PÅ FLAPPEN --- */
+    .wax-seal {
         position: absolute;
-        top: 20px;
+        top: 35px; /* Placeret øverst hvor flappen møder lukningen */
         left: 50%;
         transform: translateX(-50%);
-        width: 80px;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--silver-light), transparent);
-        opacity: 0.4;
+        width: 65px;
+        height: 65px;
+        background: radial-gradient(circle at 35% 30%, var(--wax-red-light) 0%, var(--wax-red) 55%, var(--wax-red-dark) 100%);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        z-index: 6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 
+            0 8px 20px rgba(0, 0, 0, 0.5),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+            inset 0 3px 6px rgba(255, 255, 255, 0.5);
+        pointer-events: none;
     }
 
-    /* --- SØLV BRYLLUPSEFFEKTER PÅ KUVERTEN --- */
+    .wax-seal-text {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.15rem;
+        letter-spacing: 1px;
+        color: var(--silver-light);
+        text-shadow: 
+            0px 1px 2px rgba(0, 0, 0, 0.8),
+            0px -1px 1px rgba(255, 255, 255, 0.3);
+    }
+
+    /* Sølv bryllupseffekter */
     .wedding-sparkles {
         position: absolute;
         top: 0;
@@ -211,25 +237,10 @@
         animation: slowTwinkle 3s ease-in-out infinite;
     }
 
-    /* Forskellige placeringer og tidsindstillinger for funklende sølveffekter */
-    .sparkle-icon:nth-child(1) { top: 35%; left: 18%; animation-delay: 0s; font-size: 0.7rem; }
-    .sparkle-icon:nth-child(2) { top: 45% sacerdote; right: 20%; animation-delay: 1s; font-size: 1rem; }
-    .sparkle-icon:nth-child(3) { top: 60%; left: 25%; animation-delay: 0.5s; font-size: 0.8rem; }
-    .sparkle-icon:nth-child(4) { top: 75%; right: 28%; animation-delay: 1.5s; font-size: 0.7rem; }
-    .sparkle-icon:nth-child(5) { top: 28%; left: 50%; transform: translateX(-50%); animation-delay: 0.8s; font-size: 1.1rem; }
-
-    /* Fine sølv-buer/ornamenter på flappen */
-    .flap-ornament {
-        position: absolute;
-        bottom: 15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 120px;
-        height: 30px;
-        border-bottom: 1px solid rgba(226, 232, 240, 0.3);
-        border-radius: 50%;
-        pointer-events: none;
-    }
+    .sparkle-icon:nth-child(1) { top: 38% ; left: 20%; animation-delay: 0s; font-size: 0.7rem; }
+    .sparkle-icon:nth-child(2) { top: 48%; right: 22%; animation-delay: 1s; font-size: 1rem; }
+    .sparkle-icon:nth-child(3) { top: 62%; left: 28%; animation-delay: 0.5s; font-size: 0.8rem; }
+    .sparkle-icon:nth-child(4) { top: 76%; right: 30%; animation-delay: 1.5s; font-size: 0.7rem; }
 
     /* Glass Card - tone-i-tone mørkeblå */
     .glass-card {
@@ -262,6 +273,12 @@
         transform: rotateX(180deg);
         opacity: 0;
         transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease 0.4s;
+    }
+
+    .envelope-wrapper.is-open .wax-seal {
+        opacity: 0;
+        transform: translateX(-50%) scale(1.2);
+        transition: opacity 0.3s ease, transform 0.5s ease;
     }
 
     .envelope-wrapper.is-open .envelope-back {
@@ -534,16 +551,19 @@
     <div class="perspective-container">
         <div class="envelope-wrapper" id="invitationEnvelope" role="button" tabindex="0" onclick="openEnvelope()" onkeypress="handleKeyPress(event)">
             
-            <!-- Kuvertens flap med sølv bryllupseffekter -->
+            <!-- Kuvertens flap med rød voksforsegling (A&K) -->
             <div class="envelope-flap" aria-label="Tryk for at åbne kuvert">
                 <div class="wedding-sparkles">
                     <span class="sparkle-icon">✦</span>
                     <span class="sparkle-icon">✦</span>
                     <span class="sparkle-icon">✦</span>
                     <span class="sparkle-icon">✦</span>
-                    <span class="sparkle-icon">✦</span>
                 </div>
-                <div class="flap-ornament"></div>
+                
+                <!-- Rød voksforsegling øverst på flappen -->
+                <div class="wax-seal">
+                    <span class="wax-seal-text">A&amp;K</span>
+                </div>
             </div>
             
             <div class="envelope-back">
