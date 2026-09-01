@@ -107,9 +107,6 @@
         transform-style: preserve-3d;
         aspect-ratio: 1.4; 
         margin: 0 auto;
-        /* Sørger for at kuverten med garanti opfanger klik på alle enheder */
-        cursor: pointer;
-        touch-action: manipulation;
     }
 
     /* ===== KLASSISK SØLV & PLATIN KUVERT ===== */
@@ -276,12 +273,6 @@
     .flap-star:nth-child(2) { top: 25%; right: 35%; animation-delay: -1.2s, 1.2s; font-size: 1.1rem; }
     .flap-star:nth-child(3) { top: 12%; left: 50%; transform: translateX(-50%); animation-delay: -0.5s, 0.7s; font-size: 0.9rem; }
 
-    /* Stjerner inde på selve invitationskortet */
-    .card-star:nth-child(1) { top: 30px; left: 8%; animation-delay: -0.5s, 0.2s; font-size: 0.8rem; }
-    .card-star:nth-child(2) { top: 110px; right: 10%; animation-delay: -1.8s, 1s; font-size: 1.2rem; }
-    .card-star:nth-child(3) { top: 190px; left: 12%; animation-delay: -0.2s, 0.8s; font-size: 0.7rem; }
-    .card-star:nth-child(4) { bottom: 60px; right: 8%; animation-delay: -1.1s, 1.5s; font-size: 0.9rem; }
-
     /* Glass Card - Invitationskortet med Frosted Glass 2.0 (Tekstur + Hvid indre kant) */
     .glass-card {
         position: absolute;
@@ -316,10 +307,10 @@
         pointer-events: none;
     }
 
-    /* ===== PERFEKT OG SIKKER ÅBNINGS-ANIMATION ===== */
+    /* Animation - Åbning */
     .envelope-wrapper.is-open .envelope-flap {
         transform: rotateX(180deg);
-        /* Nu slettes kuverten ikke. Den roterer bare og bliver bagved kortet! */
+        z-index: 2;
         transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -330,8 +321,9 @@
     }
 
     .envelope-wrapper.is-open .envelope-back {
-        /* Fjernet opacity: 0 og transform. Kuverten bliver nu præcis, hvor den er! */
+        transform: translateY(30px) scale(0.95);
         pointer-events: none;
+        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .envelope-wrapper.is-open .glass-card {
@@ -630,14 +622,11 @@
             <div class="particles" id="particles"></div>
 
             <div class="glass-card" role="region" aria-label="Indbydelse til 25 års sølvbryllup">
-                <div class="wedding-sparkles" style="position: absolute; pointer-events: none; z-index: 1;">
-                    <span class="sparkle-icon card-star">✦</span>
-                    <span class="sparkle-icon card-star">✦</span>
-                    <span class="sparkle-icon card-star">✦</span>
-                    <span class="sparkle-icon card-star">✦</span>
-                </div>
+                
+                <div style="position: relative; z-index: 2; min-height: 100%;">
+                    
+                    <div id="card-stars-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: -1;"></div>
 
-                <div style="position: relative; z-index: 2;">
                     <h1>Sølvbryllup</h1>
                     <h2>Anh &amp; Khuong inviterer til fejring af 25 års ægteskab</h2>
                     
@@ -675,6 +664,34 @@
     </div>
 
     <script>
+        // Denne funktion genererer præcis 25 tilfældige stjerner
+        function createCardStars() {
+            const container = document.getElementById('card-stars-container');
+            container.innerHTML = '';
+            
+            for (let i = 0; i < 25; i++) {
+                const star = document.createElement('span');
+                star.className = 'sparkle-icon';
+                star.innerHTML = '✦';
+                
+                // Tilfældig placering indenfor hele kortets højde og bredde
+                star.style.left = Math.floor(Math.random() * 94 + 3) + '%';
+                star.style.top = Math.floor(Math.random() * 98 + 1) + '%';
+                
+                // Tilfældig størrelse mellem 0.4rem og 1.1rem
+                const size = (Math.random() * 0.7 + 0.4).toFixed(2);
+                star.style.fontSize = size + 'rem';
+                
+                // Tilfældig blinke-rytme og gennemsigtighed
+                const delay1 = (Math.random() * -5).toFixed(2) + 's';
+                const delay2 = (Math.random() * 2).toFixed(2) + 's';
+                star.style.animationDelay = `${delay1}, ${delay2}`;
+                star.style.opacity = (Math.random() * 0.4 + 0.4).toFixed(2);
+                
+                container.appendChild(star);
+            }
+        }
+
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
             particlesContainer.innerHTML = '';
@@ -711,6 +728,9 @@
                 openEnvelope();
             }
         }
+
+        // Kør stjerne-generatoren når siden indlæses
+        document.addEventListener('DOMContentLoaded', createCardStars);
 
         // Forhindrer fejl ved gentagne klik efter åbning
         document.getElementById('invitationEnvelope').addEventListener('click', function(e) {
