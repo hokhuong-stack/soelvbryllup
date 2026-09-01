@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Anh & Khuong | 25 Års Sølvbryllup</title>
+<!-- Fonts - optimized for mobile -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -105,8 +106,8 @@
         width: 100%;
         max-width: 400px;
         transform-style: preserve-3d;
-        min-height: 500px;
-        aspect-ratio: 1;
+        /* ÆNDRET HER: Før aspect-ratio: 1; (firkant). Nu 1.4 for rektangulær kuvert. Min-højde er fjernet. */
+        aspect-ratio: 1.4;
     }
 
     /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER & BRYLLUPSEFFEKTER ===== */
@@ -506,12 +507,12 @@
         }
 
         .perspective-container { padding: var(--padding-lg); }
-        .envelope-wrapper { min-height: 600px; }
+        /* ÆNDRET HER: Før min-height: 600px; - fjernet for at holde formen */
         .glass-card { max-height: 90vh; }
     }
 
     @media (min-width: 1024px) {
-        .envelope-wrapper { min-height: auto; aspect-ratio: auto; }
+        /* ÆNDRET HER: Før aspect-ratio: auto; - fjernet for at holde rektanglet på computer */
         .glass-card { max-height: none; overflow-y: visible; }
         .btn:hover {
             transform: translateY(-2px);
@@ -547,6 +548,7 @@
     <div class="perspective-container">
         <div class="envelope-wrapper" id="invitationEnvelope" role="button" tabindex="0" onclick="openEnvelope()" onkeypress="handleKeyPress(event)">
             
+            <!-- Kuvertens flap med sølvbryllupseffekter -->
             <div class="envelope-flap" aria-label="Tryk for at åbne kuvert">
                 <div class="wedding-sparkles">
                     <span class="sparkle-icon">✦</span>
@@ -556,6 +558,7 @@
                 </div>
             </div>
 
+            <!-- Rød voksforsegling placeret helt forest på spidsen med sort tekst -->
             <div class="wax-seal">
                 <span class="wax-seal-text">A&amp;K</span>
             </div>
