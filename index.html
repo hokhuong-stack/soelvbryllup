@@ -87,7 +87,7 @@
         z-index: 1;
     }
 
-    /* 3D Envelope Container - Mobile Optimized */
+    /* 3D Envelope Container - Centreret på telefonen */
     .perspective-container {
         position: relative;
         z-index: 2;
@@ -104,10 +104,13 @@
     .envelope-wrapper {
         position: relative;
         width: 100%;
-        max-width: 400px;
+        max-width: 380px;
         transform-style: preserve-3d;
-        min-height: 500px;
-        aspect-ratio: 1;
+        /* Reduceret til halv højde (aspect-ratio 2 / 1 svarer til bredde:højde = 2:1) */
+        aspect-ratio: 2 / 1;
+        min-height: 220px;
+        max-height: 280px;
+        margin: auto;
     }
 
     /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER & BRYLLUPSEFFEKTER ===== */
@@ -121,7 +124,7 @@
         height: 80%;
         background: linear-gradient(145deg, #1e3a5f 0%, #132742 60%, #0d1a2d 100%);
         border: 2px solid var(--silver-border);
-        border-radius: 0 0 28px 28px;
+        border-radius: 0 0 20px 20px;
         box-shadow: 
             0 25px 50px rgba(0, 0, 0, 0.6),
             inset 0 1px 0 rgba(255, 255, 255, 0.2),
@@ -131,7 +134,7 @@
         display: flex;
         align-items: flex-end;
         justify-content: center;
-        padding-bottom: var(--padding-sm);
+        padding-bottom: var(--padding-xs);
         overflow: hidden;
     }
 
@@ -152,10 +155,10 @@
         font-family: 'Playfair Display', serif;
         font-style: italic;
         color: var(--silver-light);
-        letter-spacing: 2.5px;
+        letter-spacing: 2px;
         animation: pulseText 2s infinite;
         cursor: pointer;
-        font-size: clamp(0.9rem, 2vw, 1rem);
+        font-size: clamp(0.8rem, 2vw, 0.9rem);
         margin: 0;
         padding: 0 var(--padding-sm);
         text-align: center;
@@ -164,17 +167,17 @@
         z-index: 2;
     }
 
-    /* Envelope Flap */
+    /* Envelope Flap - Halveret højde og tilpasset */
     .envelope-flap {
         position: absolute;
-        top: 20%;
+        top: 0;
         left: 0;
         width: 100%;
-        height: 50%;
+        height: 65%;
         background: linear-gradient(135deg, #23436d 0%, #1a3354 50%, #102138 100%);
         border: 2px solid var(--silver-border);
         border-bottom: none;
-        border-radius: 28px 28px 0 0;
+        border-radius: 20px 20px 0 0;
         clip-path: polygon(0 0, 100% 0, 50% 100%);
         transform-origin: top center;
         z-index: 5;
@@ -187,11 +190,11 @@
     /* --- RØD VOKSFORSEGLING MED SORT TEKST PLACERET FOREST PÅ SPIDSEN --- */
     .wax-seal {
         position: absolute;
-        top: calc(20% + 50% - 32px);
+        top: calc(65% - 24px);
         left: 50%;
         transform: translateX(-50%);
-        width: 64px;
-        height: 64px;
+        width: 52px;
+        height: 52px;
         background: radial-gradient(circle at 35% 30%, var(--wax-red-light) 0%, var(--wax-red) 55%, var(--wax-red-dark) 100%);
         border: 2px solid rgba(255, 255, 255, 0.6);
         border-radius: 50%;
@@ -200,7 +203,7 @@
         align-items: center;
         justify-content: center;
         box-shadow: 
-            0 10px 25px rgba(0, 0, 0, 0.6),
+            0 8px 20px rgba(0, 0, 0, 0.6),
             inset 0 -3px 6px rgba(0, 0, 0, 0.4),
             inset 0 3px 6px rgba(255, 255, 255, 0.5);
         pointer-events: none;
@@ -209,9 +212,9 @@
     .wax-seal-text {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
-        font-size: 1.15rem;
+        font-size: 1rem;
         letter-spacing: 1px;
-        color: #000000; /* Sat til sort */
+        color: #000000;
         text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     }
 
@@ -229,26 +232,28 @@
     .sparkle-icon {
         position: absolute;
         color: var(--silver-light);
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         opacity: 0.6;
         animation: slowTwinkle 3s ease-in-out infinite;
     }
 
-    .sparkle-icon:nth-child(1) { top: 38%; left: 20%; animation-delay: 0s; font-size: 0.7rem; }
-    .sparkle-icon:nth-child(2) { top: 48%; right: 22%; animation-delay: 1s; font-size: 1rem; }
-    .sparkle-icon:nth-child(3) { top: 62%; left: 28%; animation-delay: 0.5s; font-size: 0.8rem; }
-    .sparkle-icon:nth-child(4) { top: 76%; right: 30%; animation-delay: 1.5s; font-size: 0.7rem; }
+    .sparkle-icon:nth-child(1) { top: 25%; left: 25%; animation-delay: 0s; font-size: 0.6rem; }
+    .sparkle-icon:nth-child(2) { top: 35%; right: 25%; animation-delay: 1s; font-size: 0.8rem; }
 
     /* Glass Card - tone-i-tone mørkeblå */
     .glass-card {
-        position: relative;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
         background: linear-gradient(135deg, rgba(30, 58, 95, 0.95) 0%, rgba(16, 28, 46, 0.96) 100%);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 2px solid var(--silver-border);
         border-radius: 28px;
         padding: clamp(var(--padding-md), 5vw, var(--padding-lg));
-        width: 100%;
+        width: 90%;
+        max-width: 400px;
         max-height: 85vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
@@ -257,12 +262,11 @@
             inset 0 0 0 1px rgba(255, 255, 255, 0.15),
             0 0 35px rgba(203, 213, 225, 0.15);
         text-align: center;
-        z-index: 4;
+        z-index: 10;
         
         opacity: 0;
-        transform: translateY(60px) scale(0.9);
-        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
         pointer-events: none;
+        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* Animation - Åbning */
@@ -286,7 +290,7 @@
 
     .envelope-wrapper.is-open .glass-card {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translate(-50%, -50%) scale(1);
         pointer-events: auto;
         transition-delay: 0.3s;
     }
@@ -507,22 +511,6 @@
         }
 
         .perspective-container { padding: var(--padding-lg); }
-        .envelope-wrapper { min-height: 600px; }
-        .glass-card { max-height: 90vh; }
-    }
-
-    @media (min-width: 1024px) {
-        .envelope-wrapper { min-height: auto; aspect-ratio: auto; }
-        .glass-card { max-height: none; overflow-y: visible; }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4);
-        }
-    }
-
-    @media (max-width: 380px) {
-        .section-title { letter-spacing: 2px; }
-        .glass-card { border-radius: 20px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -553,8 +541,6 @@
                 <div class="wedding-sparkles">
                     <span class="sparkle-icon">✦</span>
                     <span class="sparkle-icon">✦</span>
-                    <span class="sparkle-icon">✦</span>
-                    <span class="sparkle-icon">✦</span>
                 </div>
             </div>
 
@@ -564,50 +550,45 @@
             </div>
             
             <div class="envelope-back">
-                <div class="wedding-sparkles" style="opacity: 0.7;">
-                    <span class="sparkle-icon" style="top: 20%; left: 15%;">✦</span>
-                    <span class="sparkle-icon" style="top: 30%; right: 18%;">✦</span>
-                    <span class="sparkle-icon" style="top: 50%; left: 20%;">✦</span>
-                    <span class="sparkle-icon" style="top: 40%; right: 22%;">✦</span>
-                </div>
                 <p>Tryk for at åbne</p>
             </div>
 
             <div class="particles" id="particles"></div>
+        </div>
+    </div>
 
-            <div class="glass-card" role="region" aria-label="Indbydelse til 25 års sølvbryllup">
-                <h1>Sølvbryllup</h1>
-                <h2>Anh &amp; Khuong inviterer til fejring af 25 års ægteskab</h2>
-                
-                <p><strong>Kære familie og venner.</strong><br><br>
-                Vi glæder os meget til at se jer. Uanset om I er med os fysisk eller følger med hjemmefra, betyder det alt for os, at I er der på dagen.</p>
-                
-                <div class="section-title">Tid &amp; Sted</div>
-                
-                <div class="info-box">
-                    <strong>Dato og Tid</strong>
-                    <span>Offentliggøres senere<br>(Uge 29) &bull; Kl. --:--</span>
-                </div>
-                
-                <div class="info-box">
-                    <strong>Fysisk Lokation</strong>
-                    <span>Can Tho<br>Vietnam</span>
-                </div>
-                
-                <div class="section-title">Deltagelse (RSVP)</div>
-                <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 8px; color: #ffffff;">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
-                <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 0; color: #ffffff;">Giv os besked om I deltager fysisk eller online.</p>
-                
-                <div class="action-buttons">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" rel="noopener" class="btn btn-primary">Udfyld Tilmelding</a>
-                    <a href="https://photos.app.goo.gl/WTLYUEcQoZqZJGWF6" target="_blank" rel="noopener" class="btn btn-secondary">Del / Se Billeder Her</a>
-                </div>
-                
-                <div class="footer">
-                    Vi glæder os meget til at se jer!<br>
-                    <strong>Anh &amp; Khuong</strong>
-                </div>
-            </div>
+    <!-- Selve indbydelseskortet (centreret og popper op ved åbning) -->
+    <div class="glass-card" role="region" aria-label="Indbydelse til 25 års sølvbryllup">
+        <h1>Sølvbryllup</h1>
+        <h2>Anh &amp; Khuong inviterer til fejring af 25 års ægteskab</h2>
+        
+        <p><strong>Kære familie og venner.</strong><br><br>
+        Vi glæder os meget til at se jer. Uanset om I er med os fysisk eller følger med hjemmefra, betyder det alt for os, at I er der på dagen.</p>
+        
+        <div class="section-title">Tid &amp; Sted</div>
+        
+        <div class="info-box">
+            <strong>Dato og Tid</strong>
+            <span>Offentliggøres senere<br>(Uge 29) &bull; Kl. --:--</span>
+        </div>
+        
+        <div class="info-box">
+            <strong>Fysisk Lokation</strong>
+            <span>Can Tho<br>Vietnam</span>
+        </div>
+        
+        <div class="section-title">Deltagelse (RSVP)</div>
+        <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 8px; color: #ffffff;">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
+        <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 0; color: #ffffff;">Giv os besked om I deltager fysisk eller online.</p>
+        
+        <div class="action-buttons">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" rel="noopener" class="btn btn-primary">Udfyld Tilmelding</a>
+            <a href="https://photos.app.goo.gl/WTLYUEcQoZqZJGWF6" target="_blank" rel="noopener" class="btn btn-secondary">Del / Se Billeder Her</a>
+        </div>
+        
+        <div class="footer">
+            Vi glæder os meget til at se jer!<br>
+            <strong>Anh &amp; Khuong</strong>
         </div>
     </div>
 
