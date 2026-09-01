@@ -128,10 +128,7 @@
             0 0 25px rgba(226, 232, 240, 0.15);
         z-index: 3;
         transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
-        display: flex;
-        align-items: flex-end; /* ÆNDRET HER: Rykker teksten ned i bunden */
-        justify-content: center;
-        padding-bottom: 20px; /* ÆNDRET HER: Giver lidt luft mellem bunden af skærmen og teksten */
+        /* Padding og flex er fjernet herfra, da vi styrer teksten absolut nu */
         overflow: hidden;
     }
 
@@ -139,7 +136,7 @@
     .envelope-back::before {
         content: '';
         position: absolute;
-        bottom: 15%;
+        bottom: 15%; /* Linjen sidder 15% fra bunden */
         left: 8%;
         right: 8%;
         height: 1px;
@@ -149,6 +146,11 @@
     }
 
     .envelope-back p {
+        position: absolute;
+        /* ÆNDRING: Placerer teksten præcist 5% fra bunden (altså under 15%-linjen) */
+        bottom: 5%; 
+        left: 0;
+        width: 100%;
         font-family: 'Playfair Display', serif;
         font-style: italic;
         color: var(--silver-light);
@@ -156,8 +158,7 @@
         animation: pulseText 2s infinite;
         cursor: pointer;
         font-size: clamp(0.9rem, 2vw, 1rem);
-        margin: 0; /* ÆNDRET HER: Fjernede margin, da flex-end styrer det nu */
-        padding: 0 var(--padding-sm);
+        margin: 0;
         text-align: center;
         font-weight: 500;
         text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
@@ -239,21 +240,21 @@
     .sparkle-icon:nth-child(3) { top: 62%; left: 28%; animation-delay: 0.5s; font-size: 0.8rem; }
     .sparkle-icon:nth-child(4) { top: 76%; right: 30%; animation-delay: 1.5s; font-size: 0.7rem; }
 
-    /* Glass Card - tone-i-tone mørkeblå */
+    /* Glass Card - ANIMATION: Vokser fra midten og dækker skærmen */
     .glass-card {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(0.1); 
+        transform: translate(-50%, -50%) scale(0.1);
         background: linear-gradient(135deg, rgba(30, 58, 95, 0.95) 0%, rgba(16, 28, 46, 0.96) 100%);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 2px solid var(--silver-border);
         border-radius: 28px;
         padding: clamp(var(--padding-md), 5vw, var(--padding-lg));
-        width: 90vw; 
+        width: 90vw;
         max-width: 450px;
-        max-height: 85vh; 
+        max-height: 85vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         box-shadow: 
@@ -287,6 +288,7 @@
         pointer-events: none;
     }
 
+    /* Kortet popper op og bliver fuld størrelse */
     .envelope-wrapper.is-open .glass-card {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
