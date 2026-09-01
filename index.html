@@ -106,22 +106,22 @@
         width: 100%;
         max-width: 380px;
         transform-style: preserve-3d;
-        /* Reduceret til halv højde (aspect-ratio 2 / 1 svarer til bredde:højde = 2:1) */
+        /* Halv højde (2:1 format) */
         aspect-ratio: 2 / 1;
-        min-height: 220px;
-        max-height: 280px;
+        min-height: 200px;
+        max-height: 260px;
         margin: auto;
     }
 
-    /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER & BRYLLUPSEFFEKTER ===== */
+    /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER ===== */
     
-    /* Envelope Back */
+    /* Envelope Back (Bunden af kuverten) */
     .envelope-back {
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 80%;
+        height: 75%;
         background: linear-gradient(145deg, #1e3a5f 0%, #132742 60%, #0d1a2d 100%);
         border: 2px solid var(--silver-border);
         border-radius: 0 0 20px 20px;
@@ -132,23 +132,9 @@
         z-index: 3;
         transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: center;
-        padding-bottom: var(--padding-xs);
         overflow: hidden;
-    }
-
-    /* Dekorativ sølvlinje på kuvertbunden */
-    .envelope-back::before {
-        content: '';
-        position: absolute;
-        bottom: 15%;
-        left: 8%;
-        right: 8%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--silver-light), transparent);
-        opacity: 0.6;
-        z-index: 2;
     }
 
     .envelope-back p {
@@ -158,7 +144,7 @@
         letter-spacing: 2px;
         animation: pulseText 2s infinite;
         cursor: pointer;
-        font-size: clamp(0.8rem, 2vw, 0.9rem);
+        font-size: clamp(0.85rem, 2vw, 0.95rem);
         margin: 0;
         padding: 0 var(--padding-sm);
         text-align: center;
@@ -167,13 +153,13 @@
         z-index: 2;
     }
 
-    /* Envelope Flap - Halveret højde og tilpasset */
+    /* Envelope Flap (Låget / trekanten) - Tilpasset præcist til halv højde */
     .envelope-flap {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 65%;
+        height: 80%;
         background: linear-gradient(135deg, #23436d 0%, #1a3354 50%, #102138 100%);
         border: 2px solid var(--silver-border);
         border-bottom: none;
@@ -187,14 +173,14 @@
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 20px rgba(0,0,0,0.4);
     }
 
-    /* --- RØD VOKSFORSEGLING MED SORT TEKST PLACERET FOREST PÅ SPIDSEN --- */
+    /* --- RØD VOKSFORSEGLING PLACERET PRÆCIS PÅ SPIDSEN AF LÅGET --- */
     .wax-seal {
         position: absolute;
-        top: calc(65% - 24px);
+        top: calc(80% - 22px); /* Sidder præcis på spidsen hvor trekanten ender */
         left: 50%;
         transform: translateX(-50%);
-        width: 52px;
-        height: 52px;
+        width: 48px;
+        height: 48px;
         background: radial-gradient(circle at 35% 30%, var(--wax-red-light) 0%, var(--wax-red) 55%, var(--wax-red-dark) 100%);
         border: 2px solid rgba(255, 255, 255, 0.6);
         border-radius: 50%;
@@ -204,16 +190,16 @@
         justify-content: center;
         box-shadow: 
             0 8px 20px rgba(0, 0, 0, 0.6),
-            inset 0 -3px 6px rgba(0, 0, 0, 0.4),
-            inset 0 3px 6px rgba(255, 255, 255, 0.5);
+            inset 0 -2px 5px rgba(0, 0, 0, 0.4),
+            inset 0 2px 5px rgba(255, 255, 255, 0.5);
         pointer-events: none;
     }
 
     .wax-seal-text {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
-        font-size: 1rem;
-        letter-spacing: 1px;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
         color: #000000;
         text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     }
@@ -232,15 +218,15 @@
     .sparkle-icon {
         position: absolute;
         color: var(--silver-light);
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         opacity: 0.6;
         animation: slowTwinkle 3s ease-in-out infinite;
     }
 
-    .sparkle-icon:nth-child(1) { top: 25%; left: 25%; animation-delay: 0s; font-size: 0.6rem; }
-    .sparkle-icon:nth-child(2) { top: 35%; right: 25%; animation-delay: 1s; font-size: 0.8rem; }
+    .sparkle-icon:nth-child(1) { top: 30%; left: 30%; animation-delay: 0s; }
+    .sparkle-icon:nth-child(2) { top: 30%; right: 30%; animation-delay: 1s; }
 
-    /* Glass Card - tone-i-tone mørkeblå */
+    /* Glass Card - Indbydelseskort der popper op */
     .glass-card {
         position: fixed;
         top: 50%;
@@ -501,18 +487,6 @@
         }
     }
 
-    /* Tablet & Desktop */
-    @media (min-width: 768px) {
-        :root {
-            --padding-xs: 14px;
-            --padding-sm: 20px;
-            --padding-md: 28px;
-            --padding-lg: 40px;
-        }
-
-        .perspective-container { padding: var(--padding-lg); }
-    }
-
     @media (prefers-reduced-motion: reduce) {
         * {
             animation-duration: 0.01ms !important;
@@ -536,7 +510,7 @@
     <div class="perspective-container">
         <div class="envelope-wrapper" id="invitationEnvelope" role="button" tabindex="0" onclick="openEnvelope()" onkeypress="handleKeyPress(event)">
             
-            <!-- Kuvertens flap med sølvbryllupseffekter -->
+            <!-- Kuvertens flap (låg) -->
             <div class="envelope-flap" aria-label="Tryk for at åbne kuvert">
                 <div class="wedding-sparkles">
                     <span class="sparkle-icon">✦</span>
@@ -544,11 +518,12 @@
                 </div>
             </div>
 
-            <!-- Rød voksforsegling placeret helt forest på spidsen med sort tekst -->
+            <!-- Rød voksforsegling placeret præcist i spidsen af låget -->
             <div class="wax-seal">
                 <span class="wax-seal-text">A&amp;K</span>
             </div>
             
+            <!-- Bunden af kuverten -->
             <div class="envelope-back">
                 <p>Tryk for at åbne</p>
             </div>
@@ -557,7 +532,7 @@
         </div>
     </div>
 
-    <!-- Selve indbydelseskortet (centreret og popper op ved åbning) -->
+    <!-- Selve indbydelseskortet -->
     <div class="glass-card" role="region" aria-label="Indbydelse til 25 års sølvbryllup">
         <h1>Sølvbryllup</h1>
         <h2>Anh &amp; Khuong inviterer til fejring af 25 års ægteskab</h2>
