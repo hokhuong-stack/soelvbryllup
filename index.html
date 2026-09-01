@@ -11,27 +11,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
     :root {
-        --blue-dark: #101c2e;
-        --blue-main: #1e3a5f;
-        --blue-light: #2c5aa0;
-        --blue-accent: #132742;
+        --blue-dark: #1e3a5f;
+        --blue-main: #2c5aa0;
+        --blue-light: #4a90e2;
+        --blue-accent: #1a2a4f;
         --blue-text: #0f1f3f;
-        
         --text-light: #f8fafc;
-        --text-secondary: #94a3b8;
-        
-        /* Sølv- og platindetaljer */
-        --silver-pure: #ffffff;
-        --silver-light: #e2e8f0;
-        --silver-mid: #cbd5e1;
-        --silver-dark: #94a3b8;
-        --silver-border: rgba(226, 232, 240, 0.45);
-
-        /* Rød voksforsegling farver */
-        --wax-red: #c0392b;
-        --wax-red-dark: #962d22;
-        --wax-red-light: #e74c3c;
-        
+        --text-secondary: #64748b;
+        --gold: #d4a574;
+        --gold-light: #e8c9a0;
         /* Mobile-first spacing */
         --padding-xs: 12px;
         --padding-sm: 16px;
@@ -48,7 +36,7 @@
         margin: 0;
         padding: 0;
         min-height: 100vh;
-        background: #080e18;
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
         color: var(--text-light);
         font-family: 'Montserrat', sans-serif;
         overflow-x: hidden;
@@ -57,6 +45,7 @@
         text-size-adjust: 100%;
     }
 
+    /* Prevent rubber band scrolling on iOS */
     body {
         overscroll-behavior: none;
     }
@@ -82,18 +71,18 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(to bottom, rgba(16, 28, 46, 0.3) 0%, rgba(8, 14, 24, 0.6) 100%);
+        background: linear-gradient(to bottom, rgba(30,58,95,0.1) 0%, rgba(30,58,95,0.2) 100%);
         z-index: 1;
     }
 
-    /* 3D Envelope Container - Central på telefonen */
+    /* 3D Envelope Container - Mobile Optimized */
     .perspective-container {
         position: relative;
         z-index: 2;
         perspective: 1200px;
         display: flex;
         justify-content: center;
-        align-items: center; /* Dette centrerer kuverten lodret og vandret */
+        align-items: center;
         min-height: 100vh;
         padding: var(--padding-sm);
         padding-top: max(var(--padding-sm), env(safe-area-inset-top));
@@ -105,53 +94,52 @@
         width: 100%;
         max-width: 400px;
         transform-style: preserve-3d;
-        aspect-ratio: 1.6 / 1; /* Giver kuverten en klassisk "halv højde" rektangulær form */
-        margin: 0 auto;
+        /* Ensure it fits on smallest screens */
+        min-height: 500px;
+        aspect-ratio: 1;
     }
 
-    /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER & BRYLLUPSEFFEKTER ===== */
+    /* ===== WHITE ENVELOPE STYLING ===== */
     
-    /* Envelope Back (Bunden af kuverten) */
+    /* Envelope Back - White with gold trim */
     .envelope-back {
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 100%; /* Dækker nu hele formen for at låse perfekt med låget */
-        background: linear-gradient(145deg, #1e3a5f 0%, #132742 60%, #0d1a2d 100%);
-        border: 2px solid var(--silver-border);
-        border-radius: 12px;
+        height: 80%;
+        background: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 50%, #f0f0f0 100%);
+        border: 2px solid var(--gold);
+        border-radius: 0 0 28px 28px;
         box-shadow: 
-            0 25px 50px rgba(0, 0, 0, 0.6),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2),
-            0 0 25px rgba(226, 232, 240, 0.15);
+            0 20px 60px rgba(0,0,0,0.15),
+            inset 0 1px 0 rgba(255,255,255,0.8),
+            0 0 30px rgba(212, 165, 116, 0.2);
         z-index: 3;
         transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
         display: flex;
         align-items: flex-end;
         justify-content: center;
-        padding-bottom: 10%; /* Skubber teksten fint ned under forseglingen */
-        overflow: hidden;
+        padding-bottom: var(--padding-sm);
     }
 
-    /* Dekorativ sølvlinje på kuvertbunden */
+    /* Decorative bottom line on envelope */
     .envelope-back::before {
         content: '';
         position: absolute;
         bottom: 15%;
-        left: 8%;
-        right: 8%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--silver-light), transparent);
+        left: 5%;
+        right: 5%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
         opacity: 0.6;
-        z-index: 2;
     }
 
     .envelope-back p {
         font-family: 'Playfair Display', serif;
         font-style: italic;
-        color: var(--silver-light);
-        letter-spacing: 2.5px;
+        color: var(--gold);
+        letter-spacing: 2px;
         animation: pulseText 2s infinite;
         cursor: pointer;
         font-size: clamp(0.9rem, 2vw, 1rem);
@@ -159,91 +147,3 @@
         padding: 0 var(--padding-sm);
         text-align: center;
         font-weight: 500;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        z-index: 2;
-    }
-
-    /* Envelope Flap (Låget) */
-    .envelope-flap {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 65%; /* Går præcis 65% ned for at låse formen */
-        background: linear-gradient(135deg, #23436d 0%, #1a3354 50%, #102138 100%);
-        border: 2px solid var(--silver-border);
-        border-bottom: none;
-        border-radius: 12px 12px 0 0;
-        clip-path: polygon(0 0, 100% 0, 50% 100%);
-        transform-origin: top center;
-        z-index: 5;
-        transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        cursor: pointer;
-        touch-action: manipulation;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 20px rgba(0,0,0,0.4);
-    }
-
-    /* --- RØD VOKSFORSEGLING MED SORT TEKST LÅST PRÆCIST PÅ SPIDSEN --- */
-    .wax-seal {
-        position: absolute;
-        top: calc(65% - 32px); /* 65% = flappens spids. 32px = halvdelen af seal's højde */
-        left: 50%;
-        transform: translateX(-50%);
-        width: 64px;
-        height: 64px;
-        background: radial-gradient(circle at 35% 30%, var(--wax-red-light) 0%, var(--wax-red) 55%, var(--wax-red-dark) 100%);
-        border: 2px solid rgba(255, 255, 255, 0.6);
-        border-radius: 50%;
-        z-index: 7;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 
-            0 10px 25px rgba(0, 0, 0, 0.6),
-            inset 0 -3px 6px rgba(0, 0, 0, 0.4),
-            inset 0 3px 6px rgba(255, 255, 255, 0.5);
-        pointer-events: none;
-    }
-
-    .wax-seal-text {
-        font-family: 'Playfair Display', serif;
-        font-weight: 700;
-        font-size: 1.15rem;
-        letter-spacing: 1px;
-        color: #000000; /* Sort tekst */
-        text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
-    }
-
-    /* Sølv bryllupseffekter */
-    .wedding-sparkles {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 4;
-    }
-
-    .sparkle-icon {
-        position: absolute;
-        color: var(--silver-light);
-        font-size: 0.9rem;
-        opacity: 0.6;
-        animation: slowTwinkle 3s ease-in-out infinite;
-    }
-
-    .sparkle-icon:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; font-size: 0.7rem; }
-    .sparkle-icon:nth-child(2) { top: 35%; right: 22%; animation-delay: 1s; font-size: 1rem; }
-    .sparkle-icon:nth-child(3) { top: 40%; left: 28%; animation-delay: 0.5s; font-size: 0.8rem; }
-    .sparkle-icon:nth-child(4) { top: 50%; right: 30%; animation-delay: 1.5s; font-size: 0.7rem; }
-
-    /* Glass Card - tone-i-tone mørkeblå, lagt i et absolut position for at holde kuverten nede */
-    .glass-card {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, 60px) scale(0.9);
-        background: linear-gradient(135deg, rgba(30, 58, 95, 0.95) 0%, rgba(16, 28, 46, 0.96) 100%);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
