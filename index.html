@@ -6,7 +6,6 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Anh & Khuong | 25 Års Sølvbryllup</title>
-<!-- Fonts - optimized for mobile -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -104,16 +103,15 @@
     .envelope-wrapper {
         position: relative;
         width: 100%;
-        max-width: 380px;
+        max-width: 360px;
         transform-style: preserve-3d;
-        /* Halv højde (2:1 format) */
+        /* Fastlåst proportion (2:1 format) */
         aspect-ratio: 2 / 1;
-        min-height: 200px;
-        max-height: 260px;
+        height: 180px;
         margin: auto;
     }
 
-    /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER ===== */
+    /* ===== MØRKEBLÅ KUVERT ===== */
     
     /* Envelope Back (Bunden af kuverten) */
     .envelope-back {
@@ -121,10 +119,10 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 75%;
+        height: 100%;
         background: linear-gradient(145deg, #1e3a5f 0%, #132742 60%, #0d1a2d 100%);
         border: 2px solid var(--silver-border);
-        border-radius: 0 0 20px 20px;
+        border-radius: 20px;
         box-shadow: 
             0 25px 50px rgba(0, 0, 0, 0.6),
             inset 0 1px 0 rgba(255, 255, 255, 0.2),
@@ -153,17 +151,16 @@
         z-index: 2;
     }
 
-    /* Envelope Flap (Låget / trekanten) - Tilpasset præcist til halv højde */
+    /* Envelope Flap (Låget / trekanten) - Låst til at dække præcist halvdelen og møde bunden */
     .envelope-flap {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
-        height: 80%;
+        height: 100%;
         background: linear-gradient(135deg, #23436d 0%, #1a3354 50%, #102138 100%);
         border: 2px solid var(--silver-border);
-        border-bottom: none;
-        border-radius: 20px 20px 0 0;
+        border-radius: 20px;
         clip-path: polygon(0 0, 100% 0, 50% 100%);
         transform-origin: top center;
         z-index: 5;
@@ -173,14 +170,14 @@
         box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 20px rgba(0,0,0,0.4);
     }
 
-    /* --- RØD VOKSFORSEGLING PLACERET PRÆCIS PÅ SPIDSEN AF LÅGET --- */
+    /* --- RØD VOKSFORSEGLING PLACERET NØJAGTIGT PÅ SPIDSEN --- */
     .wax-seal {
         position: absolute;
-        top: calc(80% - 22px); /* Sidder præcis på spidsen hvor trekanten ender */
+        top: calc(100% - 22px); /* Sidder præcis på spidsen af trekantslåget i bunden */
         left: 50%;
         transform: translateX(-50%);
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
         background: radial-gradient(circle at 35% 30%, var(--wax-red-light) 0%, var(--wax-red) 55%, var(--wax-red-dark) 100%);
         border: 2px solid rgba(255, 255, 255, 0.6);
         border-radius: 50%;
@@ -198,7 +195,7 @@
     .wax-seal-text {
         font-family: 'Playfair Display', serif;
         font-weight: 700;
-        font-size: 0.95rem;
+        font-size: 0.85rem;
         letter-spacing: 0.5px;
         color: #000000;
         text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
@@ -223,8 +220,8 @@
         animation: slowTwinkle 3s ease-in-out infinite;
     }
 
-    .sparkle-icon:nth-child(1) { top: 30%; left: 30%; animation-delay: 0s; }
-    .sparkle-icon:nth-child(2) { top: 30%; right: 30%; animation-delay: 1s; }
+    .sparkle-icon:nth-child(1) { top: 25%; left: 35%; animation-delay: 0s; }
+    .sparkle-icon:nth-child(2) { top: 25%; right: 35%; animation-delay: 1s; }
 
     /* Glass Card - Indbydelseskort der popper op */
     .glass-card {
@@ -379,238 +376,3 @@
         font-size: clamp(0.65rem, 2vw, 0.75rem);
         text-transform: uppercase;
     }
-
-    .info-box span {
-        font-size: clamp(0.95rem, 3vw, 1.1rem);
-        font-family: 'Playfair Display', serif;
-        color: #ffffff;
-        display: block;
-        line-height: 1.5;
-        word-break: break-word;
-    }
-
-    /* Knapper med sølv/platin stil */
-    .action-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: var(--padding-sm);
-        margin-top: var(--padding-md);
-        margin-bottom: var(--padding-md);
-    }
-
-    .btn {
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        padding: clamp(16px, 3.5vw, 18px) clamp(16px, 2vw, 20px);
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        box-sizing: border-box;
-        transition: all 0.3s ease;
-        -webkit-tap-highlight-color: transparent;
-        cursor: pointer;
-        touch-action: manipulation;
-        min-height: 44px;
-        line-height: 1.2;
-        word-break: break-word;
-    }
-
-    .btn-primary {
-        background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #94a3b8 100%);
-        color: #0f1f3f;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.2);
-        border: 1px solid #ffffff;
-    }
-
-    .btn-primary:active {
-        transform: scale(0.96);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    }
-
-    .btn-secondary {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1.5px solid var(--silver-border);
-        color: #ffffff;
-    }
-
-    .btn-secondary:active {
-        transform: scale(0.96);
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    /* Footer */
-    .footer {
-        margin-top: var(--padding-md);
-        margin-bottom: var(--padding-sm);
-        font-family: 'Playfair Display', serif;
-        font-size: clamp(0.95rem, 3vw, 1.1rem);
-        color: var(--silver-light);
-        font-style: italic;
-        line-height: 1.6;
-    }
-
-    .footer strong {
-        display: block;
-        margin-top: var(--padding-sm);
-        font-size: clamp(1.2rem, 4vw, 1.5rem);
-        color: #ffffff;
-        font-style: normal;
-        font-weight: 700;
-        text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-
-    /* Animations */
-    @keyframes pulseText {
-        0% { opacity: 0.6; }
-        50% { opacity: 1; }
-        100% { opacity: 0.6; }
-    }
-
-    @keyframes slowTwinkle {
-        0%, 100% { opacity: 0.3; transform: scale(0.9); }
-        50% { opacity: 0.9; transform: scale(1.1); }
-    }
-
-    @keyframes floatUp {
-        from {
-            opacity: 1;
-            transform: translateY(0) translateX(0);
-        }
-        to {
-            opacity: 0;
-            transform: translateY(-100px) translateX(var(--tx));
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        * {
-            animation-duration: 0.01ms !important;
-            animation-iteration-count: 1 !important;
-            transition-duration: 0.01ms !important;
-        }
-    }
-
-    @supports (padding: max(0px)) {
-        .perspective-container {
-            padding-left: max(var(--padding-sm), env(safe-area-inset-left));
-            padding-right: max(var(--padding-sm), env(safe-area-inset-right));
-        }
-    }
-</style>
-</head>
-<body>
-    <div class="bg-image"></div>
-    <div class="overlay"></div>
-    
-    <div class="perspective-container">
-        <div class="envelope-wrapper" id="invitationEnvelope" role="button" tabindex="0" onclick="openEnvelope()" onkeypress="handleKeyPress(event)">
-            
-            <!-- Kuvertens flap (låg) -->
-            <div class="envelope-flap" aria-label="Tryk for at åbne kuvert">
-                <div class="wedding-sparkles">
-                    <span class="sparkle-icon">✦</span>
-                    <span class="sparkle-icon">✦</span>
-                </div>
-            </div>
-
-            <!-- Rød voksforsegling placeret præcist i spidsen af låget -->
-            <div class="wax-seal">
-                <span class="wax-seal-text">A&amp;K</span>
-            </div>
-            
-            <!-- Bunden af kuverten -->
-            <div class="envelope-back">
-                <p>Tryk for at åbne</p>
-            </div>
-
-            <div class="particles" id="particles"></div>
-        </div>
-    </div>
-
-    <!-- Selve indbydelseskortet -->
-    <div class="glass-card" role="region" aria-label="Indbydelse til 25 års sølvbryllup">
-        <h1>Sølvbryllup</h1>
-        <h2>Anh &amp; Khuong inviterer til fejring af 25 års ægteskab</h2>
-        
-        <p><strong>Kære familie og venner.</strong><br><br>
-        Vi glæder os meget til at se jer. Uanset om I er med os fysisk eller følger med hjemmefra, betyder det alt for os, at I er der på dagen.</p>
-        
-        <div class="section-title">Tid &amp; Sted</div>
-        
-        <div class="info-box">
-            <strong>Dato og Tid</strong>
-            <span>Offentliggøres senere<br>(Uge 29) &bull; Kl. --:--</span>
-        </div>
-        
-        <div class="info-box">
-            <strong>Fysisk Lokation</strong>
-            <span>Can Tho<br>Vietnam</span>
-        </div>
-        
-        <div class="section-title">Deltagelse (RSVP)</div>
-        <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 8px; color: #ffffff;">Svar udbedes senest den <strong>1. marts 2027</strong>.</p>
-        <p style="font-size: clamp(0.8rem, 2.5vw, 0.85rem); margin-bottom: 0; color: #ffffff;">Giv os besked om I deltager fysisk eller online.</p>
-        
-        <div class="action-buttons">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_5PRr6gCqKy3kROfcRZ-I-2lcgnPLvZOLAZ06RsYsSJ2C7g/viewform" target="_blank" rel="noopener" class="btn btn-primary">Udfyld Tilmelding</a>
-            <a href="https://photos.app.goo.gl/WTLYUEcQoZqZJGWF6" target="_blank" rel="noopener" class="btn btn-secondary">Del / Se Billeder Her</a>
-        </div>
-        
-        <div class="footer">
-            Vi glæder os meget til at se jer!<br>
-            <strong>Anh &amp; Khuong</strong>
-        </div>
-    </div>
-
-    <script>
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            particlesContainer.innerHTML = '';
-            
-            const particleCount = 15;
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                const startX = Math.random() * 100;
-                const duration = 0.8 + Math.random() * 0.4;
-                const tx = (Math.random() - 0.5) * 200;
-                
-                particle.style.left = startX + '%';
-                particle.style.top = '50%';
-                particle.style.setProperty('--tx', tx + 'px');
-                particle.style.animation = `floatUp ${duration}s ease-out forwards`;
-                
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        function openEnvelope() {
-            const envelope = document.getElementById('invitationEnvelope');
-            if (!envelope.classList.contains('is-open')) {
-                envelope.classList.add('is-open');
-                createParticles();
-            }
-        }
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault();
-                openEnvelope();
-            }
-        }
-
-        // Forhindrer fejl ved gentagne klik efter åbning
-        document.getElementById('invitationEnvelope').addEventListener('click', function(e) {
-            if (this.classList.contains('is-open')) {
-                e.stopPropagation();
-            }
-        });
-    </script>
-</body>
-</html>
