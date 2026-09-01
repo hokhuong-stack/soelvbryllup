@@ -106,8 +106,9 @@
         width: 100%;
         max-width: 400px;
         transform-style: preserve-3d;
-        /* ÆNDRET HER: Før aspect-ratio: 1; (firkant). Nu 1.4 for rektangulær kuvert. Min-højde er fjernet. */
-        aspect-ratio: 1.4;
+        /* Den rektangulære form du godkendte */
+        aspect-ratio: 1.4; 
+        margin: 0 auto;
     }
 
     /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER & BRYLLUPSEFFEKTER ===== */
@@ -118,10 +119,10 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 80%;
+        height: 100%; 
         background: linear-gradient(145deg, #1e3a5f 0%, #132742 60%, #0d1a2d 100%);
         border: 2px solid var(--silver-border);
-        border-radius: 0 0 28px 28px;
+        border-radius: 12px; 
         box-shadow: 
             0 25px 50px rgba(0, 0, 0, 0.6),
             inset 0 1px 0 rgba(255, 255, 255, 0.2),
@@ -129,7 +130,7 @@
         z-index: 3;
         transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: center;
         padding-bottom: var(--padding-sm);
         overflow: hidden;
@@ -157,6 +158,7 @@
         cursor: pointer;
         font-size: clamp(0.9rem, 2vw, 1rem);
         margin: 0;
+        margin-top: 35px; /* Giver plads til voksforseglingen */
         padding: 0 var(--padding-sm);
         text-align: center;
         font-weight: 500;
@@ -167,14 +169,14 @@
     /* Envelope Flap */
     .envelope-flap {
         position: absolute;
-        top: 20%;
+        top: 0;
         left: 0;
         width: 100%;
-        height: 50%;
+        height: 65%; 
         background: linear-gradient(135deg, #23436d 0%, #1a3354 50%, #102138 100%);
         border: 2px solid var(--silver-border);
         border-bottom: none;
-        border-radius: 28px 28px 0 0;
+        border-radius: 12px 12px 0 0;
         clip-path: polygon(0 0, 100% 0, 50% 100%);
         transform-origin: top center;
         z-index: 5;
@@ -187,7 +189,7 @@
     /* --- RØD VOKSFORSEGLING MED SORT TEKST PLACERET FOREST PÅ SPIDSEN --- */
     .wax-seal {
         position: absolute;
-        top: calc(20% + 50% - 32px);
+        top: calc(65% - 32px); 
         left: 50%;
         transform: translateX(-50%);
         width: 64px;
@@ -211,7 +213,7 @@
         font-weight: 700;
         font-size: 1.15rem;
         letter-spacing: 1px;
-        color: #000000; /* Sat til sort */
+        color: #000000; 
         text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     }
 
@@ -239,16 +241,22 @@
     .sparkle-icon:nth-child(3) { top: 62%; left: 28%; animation-delay: 0.5s; font-size: 0.8rem; }
     .sparkle-icon:nth-child(4) { top: 76%; right: 30%; animation-delay: 1.5s; font-size: 0.7rem; }
 
-    /* Glass Card - tone-i-tone mørkeblå */
+    /* Glass Card - ANIMATION: Vokser fra midten og dækker skærmen */
     .glass-card {
-        position: relative;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* Starter lillebitte og præcis i midten */
+        transform: translate(-50%, -50%) scale(0.1);
         background: linear-gradient(135deg, rgba(30, 58, 95, 0.95) 0%, rgba(16, 28, 46, 0.96) 100%);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 2px solid var(--silver-border);
         border-radius: 28px;
         padding: clamp(var(--padding-md), 5vw, var(--padding-lg));
-        width: 100%;
+        /* Bredden gøres uafhængig af kuverten, så den ser godt ud på skærmen */
+        width: 90vw;
+        max-width: 450px;
         max-height: 85vh;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
@@ -257,11 +265,10 @@
             inset 0 0 0 1px rgba(255, 255, 255, 0.15),
             0 0 35px rgba(203, 213, 225, 0.15);
         text-align: center;
-        z-index: 4;
+        z-index: 10; /* Sikrer at kortet lægger sig OVER alt andet */
         
         opacity: 0;
-        transform: translateY(60px) scale(0.9);
-        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         pointer-events: none;
     }
 
@@ -284,9 +291,10 @@
         pointer-events: none;
     }
 
+    /* Kortet popper op og bliver fuld størrelse */
     .envelope-wrapper.is-open .glass-card {
         opacity: 1;
-        transform: translateY(0) scale(1);
+        transform: translate(-50%, -50%) scale(1);
         pointer-events: auto;
         transition-delay: 0.3s;
     }
@@ -507,12 +515,10 @@
         }
 
         .perspective-container { padding: var(--padding-lg); }
-        /* ÆNDRET HER: Før min-height: 600px; - fjernet for at holde formen */
         .glass-card { max-height: 90vh; }
     }
 
     @media (min-width: 1024px) {
-        /* ÆNDRET HER: Før aspect-ratio: auto; - fjernet for at holde rektanglet på computer */
         .glass-card { max-height: none; overflow-y: visible; }
         .btn:hover {
             transform: translateY(-2px);
