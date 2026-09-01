@@ -110,70 +110,81 @@
         margin: 0 auto;
     }
 
-    /* ===== MØRKEBLÅ KUVERT MED SØLVKANTER & BRYLLUPSEFFEKTER ===== */
+    /* ===== KLASSISK SØLV & PLATIN KUVERT ===== */
     
-    /* Envelope Back */
+    /* Envelope Back - Nu med ægte papirtekstur (SVG noise) og sølv-gradient */
     .envelope-back {
         position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
         height: 100%; 
-        background: linear-gradient(145deg, #1e3a5f 0%, #132742 60%, #0d1a2d 100%);
-        border: 2px solid var(--silver-border);
+        background: 
+            url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E"),
+            linear-gradient(145deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+        border: 1px solid #cbd5e1;
         border-radius: 12px; 
         box-shadow: 
-            0 25px 50px rgba(0, 0, 0, 0.6),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2),
-            0 0 25px rgba(226, 232, 240, 0.15);
+            0 25px 50px rgba(0, 0, 0, 0.5),
+            inset 0 -2px 10px rgba(0, 0, 0, 0.05);
         z-index: 3;
         transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
-        /* Padding og flex er fjernet herfra, da vi styrer teksten absolut nu */
         overflow: hidden;
     }
 
-    /* Dekorativ sølvlinje på kuvertbunden */
+    /* Dekorativ sølvlinje - Nu med animeret sølvfolie (shimmer) */
     .envelope-back::before {
         content: '';
         position: absolute;
-        bottom: 15%; /* Linjen sidder 15% fra bunden */
+        bottom: 15%; 
         left: 8%;
         right: 8%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, var(--silver-light), transparent);
-        opacity: 0.6;
+        height: 2px;
+        background: linear-gradient(90deg, transparent 0%, #94a3b8 20%, #ffffff 50%, #94a3b8 80%, transparent 100%);
+        background-size: 200% auto;
+        animation: foilShimmer 3s linear infinite;
+        opacity: 0.8;
         z-index: 2;
     }
 
+    /* Animeret sølvfolie tekst */
     .envelope-back p {
         position: absolute;
-        /* ÆNDRING: Placerer teksten præcist 5% fra bunden (altså under 15%-linjen) */
         bottom: 5%; 
         left: 0;
         width: 100%;
         font-family: 'Playfair Display', serif;
         font-style: italic;
-        color: var(--silver-light);
         letter-spacing: 2.5px;
-        animation: pulseText 2s infinite;
-        cursor: pointer;
         font-size: clamp(0.9rem, 2vw, 1rem);
         margin: 0;
         text-align: center;
-        font-weight: 500;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        font-weight: 600;
         z-index: 2;
+        cursor: pointer;
+        
+        /* Sølvfolie effekt */
+        background: linear-gradient(110deg, #94a3b8 10%, #e2e8f0 30%, #ffffff 50%, #e2e8f0 70%, #94a3b8 90%);
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: foilShimmer 3s linear infinite;
+        /* Tekstskygge til at fremhæve folien mod det lyse papir */
+        filter: drop-shadow(0px 1px 1px rgba(0,0,0,0.15));
     }
 
-    /* Envelope Flap */
+    /* Envelope Flap - Papirtekstur, hvidt highlight og hårdere 3D-skygge */
     .envelope-flap {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 65%; 
-        background: linear-gradient(135deg, #23436d 0%, #1a3354 50%, #102138 100%);
-        border: 2px solid var(--silver-border);
+        background: 
+            url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.06'/%3E%3C/svg%3E"),
+            linear-gradient(135deg, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%);
+        border: 1px solid #cbd5e1;
         border-bottom: none;
         border-radius: 12px 12px 0 0;
         clip-path: polygon(0 0, 100% 0, 50% 100%);
@@ -182,10 +193,14 @@
         transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
         touch-action: manipulation;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 8px 20px rgba(0,0,0,0.4);
+        /* Skarp realistisk skygge under klappen + highlight i kanten for at vise papirtykkelse */
+        box-shadow: 
+            inset 0 1px 0 rgba(255,255,255,1), 
+            0 12px 15px -3px rgba(0,0,0,0.25), 
+            0 4px 6px -4px rgba(0,0,0,0.1);
     }
 
-    /* --- RØD VOKSFORSEGLING MED SORT TEKST PLACERET FOREST PÅ SPIDSEN --- */
+    /* --- RØD VOKSFORSEGLING (Beholdt som den klassiske dybe røde) --- */
     .wax-seal {
         position: absolute;
         top: calc(65% - 32px); 
@@ -216,7 +231,7 @@
         text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.4);
     }
 
-    /* Sølv bryllupseffekter */
+    /* Sølv bryllupseffekter - Nu animeret med folie-glans i stedet for blot gennemsigtighed */
     .wedding-sparkles {
         position: absolute;
         top: 0;
@@ -229,18 +244,25 @@
 
     .sparkle-icon {
         position: absolute;
-        color: var(--silver-light);
         font-size: 0.9rem;
-        opacity: 0.6;
-        animation: slowTwinkle 3s ease-in-out infinite;
+        opacity: 0.9;
+        
+        /* Animeret folie på stjernerne */
+        background: linear-gradient(110deg, #94a3b8 10%, #e2e8f0 30%, #ffffff 50%, #e2e8f0 70%, #94a3b8 90%);
+        background-size: 200% auto;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: foilShimmer 3s linear infinite, floatingSparkle 4s ease-in-out infinite;
+        filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.1));
     }
 
-    .sparkle-icon:nth-child(1) { top: 38%; left: 20%; animation-delay: 0s; font-size: 0.7rem; }
-    .sparkle-icon:nth-child(2) { top: 48%; right: 22%; animation-delay: 1s; font-size: 1rem; }
-    .sparkle-icon:nth-child(3) { top: 62%; left: 28%; animation-delay: 0.5s; font-size: 0.8rem; }
-    .sparkle-icon:nth-child(4) { top: 76%; right: 30%; animation-delay: 1.5s; font-size: 0.7rem; }
+    .sparkle-icon:nth-child(1) { top: 38%; left: 20%; animation-delay: 0s, 0s; font-size: 0.7rem; }
+    .sparkle-icon:nth-child(2) { top: 48%; right: 22%; animation-delay: -1.5s, 1s; font-size: 1rem; }
+    .sparkle-icon:nth-child(3) { top: 62%; left: 28%; animation-delay: -0.7s, 0.5s; font-size: 0.8rem; }
+    .sparkle-icon:nth-child(4) { top: 76%; right: 30%; animation-delay: -2s, 1.5s; font-size: 0.7rem; }
 
-    /* Glass Card - ANIMATION: Vokser fra midten og dækker skærmen */
+    /* Glass Card - Invitationskortet (Forbliver det eksklusive mørkeblå design) */
     .glass-card {
         position: absolute;
         top: 50%;
@@ -288,7 +310,6 @@
         pointer-events: none;
     }
 
-    /* Kortet popper op og bliver fuld størrelse */
     .envelope-wrapper.is-open .glass-card {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
@@ -317,7 +338,7 @@
         pointer-events: none;
     }
 
-    /* Typografi */
+    /* Typografi for invitationskortet */
     h1 {
         font-family: 'Playfair Display', serif;
         font-size: clamp(1.8rem, 6vw, 2.8rem);
@@ -479,16 +500,15 @@
         text-shadow: 0 2px 8px rgba(0,0,0,0.3);
     }
 
-    /* Animations */
-    @keyframes pulseText {
-        0% { opacity: 0.6; }
-        50% { opacity: 1; }
-        100% { opacity: 0.6; }
+    /* Nye Animations for Folie og Stjerner */
+    @keyframes foilShimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
     }
 
-    @keyframes slowTwinkle {
-        0%, 100% { opacity: 0.3; transform: scale(0.9); }
-        50% { opacity: 0.9; transform: scale(1.1); }
+    @keyframes floatingSparkle {
+        0%, 100% { transform: translateY(0) scale(0.9); }
+        50% { transform: translateY(-5px) scale(1.1); }
     }
 
     @keyframes floatUp {
@@ -567,7 +587,7 @@
             </div>
             
             <div class="envelope-back">
-                <div class="wedding-sparkles" style="opacity: 0.7;">
+                <div class="wedding-sparkles">
                     <span class="sparkle-icon" style="top: 20%; left: 15%;">✦</span>
                     <span class="sparkle-icon" style="top: 30%; right: 18%;">✦</span>
                     <span class="sparkle-icon" style="top: 50%; left: 20%;">✦</span>
