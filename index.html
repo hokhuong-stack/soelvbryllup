@@ -106,7 +106,6 @@
         width: 100%;
         max-width: 400px;
         transform-style: preserve-3d;
-        /* Den rektangulære form du godkendte */
         aspect-ratio: 1.4; 
         margin: 0 auto;
     }
@@ -130,9 +129,9 @@
         z-index: 3;
         transition: opacity 0.5s ease 0.8s, transform 0.8s ease 0.6s;
         display: flex;
-        align-items: center;
+        align-items: flex-end; /* ÆNDRET HER: Rykker teksten ned i bunden */
         justify-content: center;
-        padding-bottom: var(--padding-sm);
+        padding-bottom: 20px; /* ÆNDRET HER: Giver lidt luft mellem bunden af skærmen og teksten */
         overflow: hidden;
     }
 
@@ -157,8 +156,7 @@
         animation: pulseText 2s infinite;
         cursor: pointer;
         font-size: clamp(0.9rem, 2vw, 1rem);
-        margin: 0;
-        margin-top: 35px; /* Giver plads til voksforseglingen */
+        margin: 0; /* ÆNDRET HER: Fjernede margin, da flex-end styrer det nu */
         padding: 0 var(--padding-sm);
         text-align: center;
         font-weight: 500;
@@ -241,23 +239,21 @@
     .sparkle-icon:nth-child(3) { top: 62%; left: 28%; animation-delay: 0.5s; font-size: 0.8rem; }
     .sparkle-icon:nth-child(4) { top: 76%; right: 30%; animation-delay: 1.5s; font-size: 0.7rem; }
 
-    /* Glass Card - ANIMATION: Vokser fra midten og dækker skærmen */
+    /* Glass Card - tone-i-tone mørkeblå */
     .glass-card {
         position: absolute;
         top: 50%;
         left: 50%;
-        /* Starter lillebitte og præcis i midten */
-        transform: translate(-50%, -50%) scale(0.1);
+        transform: translate(-50%, -50%) scale(0.1); 
         background: linear-gradient(135deg, rgba(30, 58, 95, 0.95) 0%, rgba(16, 28, 46, 0.96) 100%);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 2px solid var(--silver-border);
         border-radius: 28px;
         padding: clamp(var(--padding-md), 5vw, var(--padding-lg));
-        /* Bredden gøres uafhængig af kuverten, så den ser godt ud på skærmen */
-        width: 90vw;
+        width: 90vw; 
         max-width: 450px;
-        max-height: 85vh;
+        max-height: 85vh; 
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         box-shadow: 
@@ -265,7 +261,7 @@
             inset 0 0 0 1px rgba(255, 255, 255, 0.15),
             0 0 35px rgba(203, 213, 225, 0.15);
         text-align: center;
-        z-index: 10; /* Sikrer at kortet lægger sig OVER alt andet */
+        z-index: 10; 
         
         opacity: 0;
         transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -291,7 +287,6 @@
         pointer-events: none;
     }
 
-    /* Kortet popper op og bliver fuld størrelse */
     .envelope-wrapper.is-open .glass-card {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
