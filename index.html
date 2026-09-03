@@ -6,6 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Anh & Khuong | 25 Års Sølvbryllup</title>
+<!-- Fonts - optimized for mobile -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -84,6 +85,35 @@
         height: 100%;
         background: linear-gradient(to bottom, rgba(16, 28, 46, 0.3) 0%, rgba(8, 14, 24, 0.6) 100%);
         z-index: 1;
+    }
+
+    /* Diskret musikkontrol-knap i hjørnet */
+    .music-toggle {
+        position: fixed;
+        top: max(20px, env(safe-area-inset-top));
+        right: max(20px, env(safe-area-inset-right));
+        z-index: 100;
+        background: rgba(16, 28, 46, 0.8);
+        border: 1px solid var(--silver-border);
+        color: var(--silver-light);
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: none; /* Vises først når kuverten åbnes */
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        transition: all 0.3s ease;
+    }
+
+    .music-toggle:hover {
+        background: rgba(30, 58, 95, 0.9);
+        color: #ffffff;
     }
 
     /* 3D Envelope Container - Mobile Optimized */
@@ -262,7 +292,18 @@
         filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.25)); 
     }
 
-    /* Stjerner på kuverten (4 på kroppen, 3 på flappen) */
+    /* Stjerner på selve kuverten (nederst) */
+    .body-star:nth-child(1) { top: 20%; left: 15%; animation-delay: 0s, 0s; font-size: 0.7rem; }
+    .body-star:nth-child(2) { top: 30%; right: 18%; animation-delay: -1.5s, 1s; font-size: 1rem; }
+    .body-star:nth-child(3) { top: 50%; left: 20%; animation-delay: -0.7s, 0.5s; font-size: 0.8rem; }
+    .body-star:nth-child(4) { top: 40%; right: 22%; animation-delay: -2s, 1.5s; font-size: 0.7rem; }
+
+    /* Stjerner på flappen */
+    .flap-star:nth-child(1) { top: 15%; left: 35%; animation-delay: -0.2s, 0s; font-size: 0.8rem; }
+    .flap-star:nth-child(2) { top: 25%; right: 35%; animation-delay: -1.2s, 1.2s; font-size: 1.1rem; }
+    .flap-star:nth-child(3) { top: 12%; left: 50%; transform: translateX(-50%); animation-delay: -0.5s, 0.7s; font-size: 0.9rem; }
+
+    /* Stjerner på kuverten (7 i alt) */
     .body-star-1 { top: 20%; left: 15%; animation-delay: 0s, 0s; font-size: 0.7rem; }
     .body-star-2 { top: 30%; right: 18%; animation-delay: -1.5s, 1s; font-size: 1rem; }
     .body-star-3 { top: 50%; left: 20%; animation-delay: -0.7s, 0.5s; font-size: 0.8rem; }
@@ -272,7 +313,7 @@
     .flap-star-2 { top: 25%; right: 35%; animation-delay: -1.2s, 1.2s; font-size: 1.1rem; }
     .flap-star-3 { top: 12%; left: 50%; transform: translateX(-50%); animation-delay: -0.5s, 0.7s; font-size: 0.9rem; }
 
-    /* De 7 stjerner placeret på selve invitationskortet (samme stil som på kuverten) */
+    /* De 7 stjerner placeret på selve invitationskortet */
     .card-star-1 { top: 25px; left: 10%; animation-delay: -0.3s, 0.1s; font-size: 0.75rem; }
     .card-star-2 { top: 75px; right: 12%; animation-delay: -1.7s, 0.9s; font-size: 1rem; }
     .card-star-3 { top: 180px; left: 8%; animation-delay: -0.8s, 0.4s; font-size: 0.7rem; }
@@ -585,10 +626,17 @@
 <body>
     <div class="bg-image"></div>
     <div class="overlay"></div>
+
+    <!-- Lydafspiller (skjult) og musikkontrol-knap -->
+    <audio id="bg-music" src="the-horizon-line.mp3" preload="auto" loop></audio>
+    <button id="musicToggleBtn" class="music-toggle" onclick="toggleMusic()">
+        <span id="musicIcon">🔊</span> <span id="musicText">Musik: Til</span>
+    </button>
     
     <div class="perspective-container">
         <div class="envelope-wrapper" id="invitationEnvelope" role="button" tabindex="0" onclick="openEnvelope()" onkeypress="handleKeyPress(event)">
             
+            <!-- Kuvertens flap med 3 stjerner -->
             <div class="envelope-flap" aria-label="Tryk for at åbne kuvert">
                 <div class="wedding-sparkles">
                     <span class="sparkle-icon flap-star-1">✦</span>
@@ -597,10 +645,12 @@
                 </div>
             </div>
 
+            <!-- Rød voksforsegling placeret helt forest på spidsen med sort tekst -->
             <div class="wax-seal">
                 <span class="wax-seal-text">A&amp;K</span>
             </div>
             
+            <!-- Kuvertens bagside med 4 stjerner -->
             <div class="envelope-back">
                 <div class="wedding-sparkles">
                     <span class="sparkle-icon body-star-1">✦</span>
@@ -615,6 +665,7 @@
 
             <div class="glass-card" role="region" aria-label="Indbydelse til 25 års sølvbryllup">
                 
+                <!-- De 7 stjerner placeret på selve invitationskortet -->
                 <div class="wedding-sparkles" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; z-index: 1;">
                     <span class="sparkle-icon card-star-1">✦</span>
                     <span class="sparkle-icon card-star-2">✦</span>
@@ -690,6 +741,35 @@
             if (!envelope.classList.contains('is-open')) {
                 envelope.classList.add('is-open');
                 createParticles();
+
+                // Start musikken når kuverten åbnes
+                const music = document.getElementById('bg-music');
+                const toggleBtn = document.getElementById('musicToggleBtn');
+                if (music) {
+                    music.volume = 0.5; // Sæt lydstyrken til et behageligt niveau
+                    music.play().then(() => {
+                        toggleBtn.style.display = 'flex'; // Vis musikkontrollen
+                    }).catch(e => {
+                        console.log("Browser blokerede autoplay af musik:", e);
+                    });
+                }
+            }
+        }
+
+        // Funktion til at tænde/slukke for musikken via knappen i hjørnet
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const icon = document.getElementById('musicIcon');
+            const text = document.getElementById('musicText');
+
+            if (music.paused) {
+                music.play();
+                icon.innerText = "🔊";
+                text.innerText = "Musik: Til";
+            } else {
+                music.pause();
+                icon.innerText = "🔇";
+                text.innerText = "Musik: Fra";
             }
         }
 
